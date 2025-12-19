@@ -1,2 +1,3 @@
-# dns
-Infrastructure as code for DNS configurations
+# DNS - ppanda.org
+
+IaC for DNS configurations
