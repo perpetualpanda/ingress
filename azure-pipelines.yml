@@ -1,0 +1,26 @@
+# Variables: 'location', 'PrimaryDNSZone', 'ResourceGroupName', 'SPN'
+
+trigger:
+  branches:
+    include:
+    - refs/heads/main
+jobs:
+- job: deploy-dns-zone
+  displayName: Deploy DNS Zone
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+  - task: AzureCLI@2
+    displayName: 'Azure CLI'
+    inputs:
+      connectedServiceNameARM: $(SPN)
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: >2-
+         az group create --name $(ResourceGroupName) --location $(location)
+                        az deployment group create  `
+                        --template-file $(Build.SourcesDirectory)\Deploy-PublicDNS.bicep `
+                        --resource-group $(ResourceGroupName) `
+                        --parameters PrimaryDNSZone=$(PrimaryDNSZone)
+      powerShellErrorActionPreference: continue
