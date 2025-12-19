@@ -20,7 +20,7 @@ jobs:
       inlineScript: >2-
          az group create --name $(ResourceGroupName) --location $(location)
                         az deployment group create  `
-                        --template-file $(Build.SourcesDirectory)\Deploy-PublicDNS.bicep `
+                        --template-file $(Build.SourcesDirectory)\dns.bicep `
                         --resource-group $(ResourceGroupName) `
                         --parameters PrimaryDNSZone=$(PrimaryDNSZone)
       powerShellErrorActionPreference: continue
