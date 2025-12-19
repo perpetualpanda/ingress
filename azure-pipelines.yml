@@ -5,7 +5,7 @@ trigger:
     include:
     - refs/heads/main
 jobs:
-- job: deploy-dns-zone
+- job: deploy_dns_zone
   displayName: Deploy DNS Zone
   pool:
     vmImage: ubuntu-latest
