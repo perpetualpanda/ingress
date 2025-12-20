@@ -3,38 +3,43 @@ name: Deploy DNS
 on:
   push:
     branches:
-      - main
+      - main # Only trigger on pushes to main
   pull_request:
     branches:
-      - '**'
+      - '**' # Trigger on all PRs for what-if only
 
 env:
   LOCATION: westus
-  PRIMARY_DNS_ZONE: ppanda.org
   RESOURCE_GROUP_NAME: rg-edge-pub-westus
+  PRIMARY_DNS_ZONE: ppanda.org
 
 jobs:
   deploy-dns:
-    name: DNS Deployment
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout repository
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Login to Azure using a service principal stored in GitHub Secrets
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Run the DNS deployment script (PowerShell Core)
-      - name: Deploy DNS
+      - name: Run DNS Deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           ./deploy.sh \
             "${{ env.RESOURCE_GROUP_NAME }}" \
             "${{ env.LOCATION }}" \
-            "${{ env.PRIMARY_DNS_ZONE }}"
-            "${{ github.event_name }}"
-        shell: bash
+            "${{ env.PRIMARY_DNS_ZONE }}" \
+            "DEPLOY"
+
+      - name: Run what if DNS Deployment
+        if: github.event_name == 'pull_request'
+        run: |
+          ./deploy.sh \
+            "${{ env.RESOURCE_GROUP_NAME }}" \
+            "${{ env.LOCATION }}" \
+            "${{ env.PRIMARY_DNS_ZONE }}" \
+            "WHATIF"
