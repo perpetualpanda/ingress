@@ -36,4 +36,5 @@ jobs:
             "${{ env.RESOURCE_GROUP_NAME }}" \
             "${{ env.LOCATION }}" \
             "${{ env.PRIMARY_DNS_ZONE }}"
+            "${{ github.event_name }}"
         shell: bash
