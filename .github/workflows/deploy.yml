@@ -8,11 +8,6 @@ on:
     branches:
       - '**' # Trigger on all PRs for what-if only
 
-env:
-  LOCATION: westus
-  RESOURCE_GROUP_NAME: rg-edge-pub-westus
-  PRIMARY_DNS_ZONE: ppanda.org
-
 jobs:
   deploy-dns:
     runs-on: ubuntu-latest
@@ -29,17 +24,9 @@ jobs:
       - name: Run what if DNS Deployment
         if: github.event_name == 'pull_request'
         run: |
-          ./deploy.sh \
-            "${{ env.RESOURCE_GROUP_NAME }}" \
-            "${{ env.LOCATION }}" \
-            "${{ env.PRIMARY_DNS_ZONE }}" \
-            "WHATIF"
+          ./scripts.deploy.sh "WHATIF"
 
       - name: Run DNS Deployment
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          ./deploy.sh \
-            "${{ env.RESOURCE_GROUP_NAME }}" \
-            "${{ env.LOCATION }}" \
-            "${{ env.PRIMARY_DNS_ZONE }}" \
-            "DEPLOY"
+          ./scripts/deploy.sh "DEPLOY"
