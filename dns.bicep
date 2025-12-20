@@ -1,7 +1,7 @@
-param dnszones_ppanda_org_name string = 'ppanda.org'
+param dnszones_primary_name string = 'ppanda.org'
 
-resource dnszones_ppanda_org_name_resource 'Microsoft.Network/dnszones@2023-07-01-preview' = {
-  name: dnszones_ppanda_org_name
+resource dnszones_primary_name_resource 'Microsoft.Network/dnszones@2023-07-01-preview' = {
+  name: dnszones_primary_name
   location: 'global'
   tags: {
     project: 'homelab'
@@ -13,8 +13,8 @@ resource dnszones_ppanda_org_name_resource 'Microsoft.Network/dnszones@2023-07-0
   }
 }
 
-resource Microsoft_Network_dnszones_A_dnszones_ppanda_org_name 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource Microsoft_Network_dnszones_A_dnszones_primary_name 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: '@'
   properties: {
     metadata: {
@@ -40,8 +40,8 @@ resource Microsoft_Network_dnszones_A_dnszones_ppanda_org_name 'Microsoft.Networ
   }
 }
 
-resource dnszones_ppanda_org_name_nas 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource dnszones_primary_name_nas 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: 'nas'
   properties: {
     metadata: {
@@ -58,8 +58,8 @@ resource dnszones_ppanda_org_name_nas 'Microsoft.Network/dnszones/A@2023-07-01-p
   }
 }
 
-resource dnszones_ppanda_org_name_status 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource dnszones_primary_name_status 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: 'status'
   properties: {
     metadata: {
@@ -76,8 +76,8 @@ resource dnszones_ppanda_org_name_status 'Microsoft.Network/dnszones/A@2023-07-0
   }
 }
 
-resource Microsoft_Network_dnszones_AAAA_dnszones_ppanda_org_name 'Microsoft.Network/dnszones/AAAA@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource Microsoft_Network_dnszones_AAAA_dnszones_primary_name 'Microsoft.Network/dnszones/AAAA@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: '@'
   properties: {
     metadata: {
@@ -103,8 +103,8 @@ resource Microsoft_Network_dnszones_AAAA_dnszones_ppanda_org_name 'Microsoft.Net
   }
 }
 
-resource dnszones_ppanda_org_name_protonmail_domainkey 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource dnszones_primary_name_protonmail_domainkey 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: 'protonmail._domainkey'
   properties: {
     metadata: {
@@ -119,8 +119,8 @@ resource dnszones_ppanda_org_name_protonmail_domainkey 'Microsoft.Network/dnszon
   }
 }
 
-resource dnszones_ppanda_org_name_protonmail2_domainkey 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource dnszones_primary_name_protonmail2_domainkey 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: 'protonmail2._domainkey'
   properties: {
     metadata: {
@@ -135,8 +135,8 @@ resource dnszones_ppanda_org_name_protonmail2_domainkey 'Microsoft.Network/dnszo
   }
 }
 
-resource dnszones_ppanda_org_name_protonmail3_domainkey 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource dnszones_primary_name_protonmail3_domainkey 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: 'protonmail3._domainkey'
   properties: {
     metadata: {
@@ -151,8 +151,8 @@ resource dnszones_ppanda_org_name_protonmail3_domainkey 'Microsoft.Network/dnszo
   }
 }
 
-resource Microsoft_Network_dnszones_MX_dnszones_ppanda_org_name 'Microsoft.Network/dnszones/MX@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource Microsoft_Network_dnszones_MX_dnszones_primary_name 'Microsoft.Network/dnszones/MX@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: '@'
   properties: {
     metadata: {
@@ -174,8 +174,8 @@ resource Microsoft_Network_dnszones_MX_dnszones_ppanda_org_name 'Microsoft.Netwo
   }
 }
 
-resource Microsoft_Network_dnszones_NS_dnszones_ppanda_org_name 'Microsoft.Network/dnszones/NS@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource Microsoft_Network_dnszones_NS_dnszones_primary_name 'Microsoft.Network/dnszones/NS@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: '@'
   properties: {
     TTL: 172800
@@ -198,8 +198,8 @@ resource Microsoft_Network_dnszones_NS_dnszones_ppanda_org_name 'Microsoft.Netwo
   }
 }
 
-resource Microsoft_Network_dnszones_TXT_dnszones_ppanda_org_name 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource Microsoft_Network_dnszones_TXT_dnszones_primary_name 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: '@'
   properties: {
     metadata: {
@@ -223,8 +223,8 @@ resource Microsoft_Network_dnszones_TXT_dnszones_ppanda_org_name 'Microsoft.Netw
   }
 }
 
-resource dnszones_ppanda_org_name_dmarc 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource dnszones_primary_name_dmarc 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: '_dmarc'
   properties: {
     metadata: {
@@ -243,8 +243,8 @@ resource dnszones_ppanda_org_name_dmarc 'Microsoft.Network/dnszones/TXT@2023-07-
   }
 }
 
-resource dnszones_ppanda_org_name_github_pages_challenge_perpetualpanda 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
-  parent: dnszones_ppanda_org_name_resource
+resource dnszones_primary_name_github_pages_challenge_perpetualpanda 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
+  parent: dnszones_primary_name_resource
   name: '_github-pages-challenge-perpetualpanda'
   properties: {
     metadata: {
