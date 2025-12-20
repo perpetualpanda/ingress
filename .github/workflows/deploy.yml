@@ -26,15 +26,6 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Run DNS Deployment
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          ./deploy.sh \
-            "${{ env.RESOURCE_GROUP_NAME }}" \
-            "${{ env.LOCATION }}" \
-            "${{ env.PRIMARY_DNS_ZONE }}" \
-            "DEPLOY"
-
       - name: Run what if DNS Deployment
         if: github.event_name == 'pull_request'
         run: |
@@ -43,3 +34,12 @@ jobs:
             "${{ env.LOCATION }}" \
             "${{ env.PRIMARY_DNS_ZONE }}" \
             "WHATIF"
+
+      - name: Run DNS Deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          ./deploy.sh \
+            "${{ env.RESOURCE_GROUP_NAME }}" \
+            "${{ env.LOCATION }}" \
+            "${{ env.PRIMARY_DNS_ZONE }}" \
+            "DEPLOY"
