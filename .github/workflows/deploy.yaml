@@ -32,7 +32,7 @@ jobs:
       # Run the DNS deployment script (PowerShell Core)
       - name: Deploy DNS
         run: |
-          ./deploy-dns.sh \
+          ./deploy.sh \
             "${{ env.RESOURCE_GROUP_NAME }}" \
             "${{ env.LOCATION }}" \
             "${{ env.PRIMARY_DNS_ZONE }}"
