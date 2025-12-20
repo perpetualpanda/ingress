@@ -21,12 +21,10 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Run what if DNS Deployment
+      - name: DNS Deployment Dry Run
         if: github.event_name == 'pull_request'
-        run: |
-          ./scripts.deploy.sh "WHATIF"
+        run: az deployment sub what-if --template-file ./main.bicep
 
-      - name: Run DNS Deployment
+      - name: DNS Deployment
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          ./scripts/deploy.sh "DEPLOY"
+        run: az deployment sub create --template-file ./main.bicep
