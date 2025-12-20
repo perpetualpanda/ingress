@@ -1,26 +1,40 @@
-# Variables: 'location', 'PrimaryDNSZone', 'ResourceGroupName', 'SPN'
-
 trigger:
   branches:
     include:
-    - refs/heads/main
-jobs:
-- job: deploy_dns_zone
-  displayName: Deploy DNS Zone
-  pool:
-    vmImage: ubuntu-latest
-  steps:
-  - checkout: self
-  - task: AzureCLI@2
-    displayName: 'Azure CLI'
-    inputs:
-      connectedServiceNameARM: $(SPN)
-      scriptType: pscore
-      scriptLocation: inlineScript
-      inlineScript: >2-
-         az group create --name $(ResourceGroupName) --location $(location)
-                        az deployment group create  `
-                        --template-file $(Build.SourcesDirectory)\dns.bicep `
-                        --resource-group $(ResourceGroupName) `
-                        --parameters PrimaryDNSZone=$(PrimaryDNSZone)
-      powerShellErrorActionPreference: continue
+      - main
+
+pr:
+  branches:
+    include:
+      - "*"
+
+variables:
+  Location: westus
+  ResourceGroupName: rg-edge-pub-westus
+  PrimaryDNSZone: ppanda.org
+  AzureServiceConnection: spn-deploy-edge-pub-westus
+
+stages:
+- stage: DeployDNS
+  displayName: DNS Deployment
+  jobs:
+  - job: Deploy
+    displayName: What-If or Deploy
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+    - checkout: self
+
+    - task: AzureCLI@2
+      displayName: Deploy DNS
+      inputs:
+        connectedServiceNameARM: $(AzureServiceConnection)
+        scriptType: pscore
+        scriptLocation: scriptPath
+        scriptPath: scripts/deploy-dns.ps1
+        arguments: >
+          -ResourceGroupName "$(ResourceGroupName)"
+          -Location "$(Location)"
+          -PrimaryDNSZone "$(PrimaryDNSZone)"
+          -BuildReason "$(Build.Reason)"
