@@ -15,8 +15,8 @@ param tags object = {
 module dnsModule './dns.bicep' = {
   name: 'dnsDeployment'
   scope: resourceGroup(resource_group_name)
-  tags: tags
   params: {
     dnszones_primary_name: dns_primary_zone_name
+    tags: tags
   }
 }

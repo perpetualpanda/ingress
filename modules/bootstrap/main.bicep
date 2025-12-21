@@ -15,6 +15,6 @@ param tags object = {
 resource dnsResourceGroup 'Microsoft.Resources/resourceGroups@2025-04-01' = {
   name: dns_resource_group_name
   location: location
-  scope: subcription()
+  scope: subscription()
   tags: tags
 }
