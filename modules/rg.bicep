@@ -9,5 +9,3 @@ resource rg_dns_resource 'Microsoft.Resources/resourceGroups@2021-04-01' = {
     project: 'homelab'
   }
 }
-
-output resourceGroupName string = rg_dns_resource.name
