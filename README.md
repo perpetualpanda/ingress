@@ -1,6 +1,6 @@
-# DNS IaC - ppanda.org
+# Ingress - ppanda.org
 
-Infrastructure as code for Azure DNS deployment
+Infrastructure as code for homelab ingress Azure deployments
 
 ## Secret rotation
 

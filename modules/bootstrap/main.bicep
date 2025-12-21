@@ -1,3 +1,5 @@
+targetScope = 'subscription'
+
 @description('Azure region for deployment')
 param location string = 'westus'
 
