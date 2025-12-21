@@ -16,4 +16,4 @@ Update the `AZURE_CREDENTIALS` secret:
 ```
 
 - [GitHub Actions secret](https://github.com/perpetualpanda/dns/settings/secrets/actions/AZURE_CREDENTIALS)
-- [SPN (spn-gh-actions-sub)](https://portal.azure.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/4046afc6-0c57-4c7b-b402-cdab956bdb44/appId/e9770942-ee53-4475-bd09-f9e5bf775be3)
+- [SPN (spn-gh-actions-dns)](https://portal.azure.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/845c7e99-e39f-49f2-aaa0-ae0976ff8097/appId/a76aa987-4129-4b7e-9edd-6c2393f59da2)

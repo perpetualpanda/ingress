@@ -1,20 +1,11 @@
-param resourceGroupName string = 'rg-dns-pub-westus'
-param dnsPrimaryZoneName string = 'ppanda.org'
-param location string = 'westus'
+param resource_group_name   string = 'rg-dns-pub-westus'
+param dns_primary_zone_name string = 'ppanda.org'
+param location              string = 'westus'
 
-module rgModule './modules/rg.bicep' = {
-  name: 'rgDeployment'
-  scope: subscription()
-  params: {
-    resourceGroupName: resourceGroupName
-    location: location
-  }
-}
-
-module dnsModule './modules/dns.bicep' = {
+module dnsModule './dns.bicep' = {
   name: 'dnsDeployment'
-  scope: resourceGroup(resourceGroupName)
+  scope: resourceGroup(resource_group_name)
   params: {
-    dnszones_primary_name: dnsPrimaryZoneName
+    dnszones_primary_name: dns_primary_zone_name
   }
 }

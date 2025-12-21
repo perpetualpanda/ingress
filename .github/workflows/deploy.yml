@@ -23,8 +23,8 @@ jobs:
 
       - name: DNS Deployment Dry Run
         if: github.event_name == 'pull_request'
-        run: az deployment sub what-if --location westus --template-file ./main.bicep
+        run: az deployment group what-if --location westus --template-file ./main.bicep
 
       - name: DNS Deployment
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: az deployment sub create --location westus --template-file ./main.bicep
+        run: az deployment group create --location westus --template-file ./main.bicep
