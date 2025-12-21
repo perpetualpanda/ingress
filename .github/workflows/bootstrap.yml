@@ -1,0 +1,44 @@
+name: Bootstrap
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - modules/bootstrap/**
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - modules/bootstrap/**
+
+env:
+  LOCATION: westus
+  TEMPLATE_FILE: ./modules/bootstrap/main.bicep
+
+jobs:
+  deploy-dns:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_BOOTSTRAP }}
+
+      - name: Bootstrap Deployment Dry Run
+        if: github.event_name == 'pull_request'
+        run: |
+          az deployment sub what-if \
+            --location "${{env.LOCATION}}" \
+            --template-file "${{ env.TEMPLATE_FILE }}"
+
+      - name: Bootstrap Deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          az deployment sub create \
+            --location "${{env.LOCATION}}" \
+            --template-file "${{ env.TEMPLATE_FILE }}"

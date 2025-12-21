@@ -3,14 +3,18 @@ name: Deploy DNS
 on:
   push:
     branches:
-      - main # Only trigger on pushes to main
+      - main
+    paths:
+      - modules/dns/**
   pull_request:
     branches:
-      - '**' # Trigger on all PRs for what-if only
+      - '**'
+    paths:
+      - modules/dns/**
 
 env:
   RESOURCE_GROUP: rg-dns-pub-westus
-  TEMPLATE_FILE: ./main.bicep
+  TEMPLATE_FILE: ./modules/dns/main.bicep
 
 jobs:
   deploy-dns:
@@ -23,7 +27,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_DNS }}
 
       - name: DNS Deployment Dry Run
         if: github.event_name == 'pull_request'
