@@ -9,9 +9,8 @@ on:
       - '**' # Trigger on all PRs for what-if only
 
 env:
-  LOCATION: westus
-  RESOURCE_GROUP_NAME: rg-edge-pub-westus
-  PRIMARY_DNS_ZONE: ppanda.org
+  RESOURCE_GROUP: rg-dns-pub-westus
+  TEMPLATE_FILE: ./main.bicep
 
 jobs:
   deploy-dns:
@@ -26,20 +25,16 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Run what if DNS Deployment
+      - name: DNS Deployment Dry Run
         if: github.event_name == 'pull_request'
         run: |
-          ./deploy.sh \
-            "${{ env.RESOURCE_GROUP_NAME }}" \
-            "${{ env.LOCATION }}" \
-            "${{ env.PRIMARY_DNS_ZONE }}" \
-            "WHATIF"
+          az deployment group what-if \
+            --resource-group "${{ env.RESOURCE_GROUP }}" \
+            --template-file "${{ env.TEMPLATE_FILE }}"
 
-      - name: Run DNS Deployment
+      - name: DNS Deployment
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          ./deploy.sh \
-            "${{ env.RESOURCE_GROUP_NAME }}" \
-            "${{ env.LOCATION }}" \
-            "${{ env.PRIMARY_DNS_ZONE }}" \
-            "DEPLOY"
+          az deployment group create \
+            --resource-group "${{ env.RESOURCE_GROUP }}" \
+            --template-file "${{ env.TEMPLATE_FILE }}"
