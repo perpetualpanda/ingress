@@ -174,30 +174,6 @@ resource Microsoft_Network_dnszones_MX_dnszones_primary_name 'Microsoft.Network/
   }
 }
 
-resource Microsoft_Network_dnszones_NS_dnszones_primary_name 'Microsoft.Network/dnszones/NS@2023-07-01-preview' = {
-  parent: dnszones_primary_name_resource
-  name: '@'
-  properties: {
-    TTL: 172800
-    NSRecords: [
-      {
-        nsdname: 'ns1-01.azure-dns.com.'
-      }
-      {
-        nsdname: 'ns2-01.azure-dns.net.'
-      }
-      {
-        nsdname: 'ns3-01.azure-dns.org.'
-      }
-      {
-        nsdname: 'ns4-01.azure-dns.info.'
-      }
-    ]
-    targetResource: {}
-    trafficManagementProfile: {}
-  }
-}
-
 resource Microsoft_Network_dnszones_TXT_dnszones_primary_name 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
   parent: dnszones_primary_name_resource
   name: '@'
