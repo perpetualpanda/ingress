@@ -1,6 +1,5 @@
 param resource_group_name   string = 'rg-dns-pub-westus'
 param dns_primary_zone_name string = 'ppanda.org'
-param location              string = 'westus'
 
 module dnsModule './dns.bicep' = {
   name: 'dnsDeployment'

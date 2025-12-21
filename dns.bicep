@@ -1,4 +1,4 @@
-param dnszones_primary_name string = 'ppanda.org'
+param dnszones_primary_name string
 
 resource dnszones_primary_name_resource 'Microsoft.Network/dnszones@2023-07-01-preview' = {
   name: dnszones_primary_name
