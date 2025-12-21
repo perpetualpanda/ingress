@@ -13,7 +13,7 @@ module rgModule './modules/rg.bicep' = {
 
 module dnsModule './modules/dns.bicep' = {
   name: 'dnsDeployment'
-  scope: resourceGroupName
+  scope: resourceGroup(resourceGroupName)
   params: {
     dnszones_primary_name: dnsPrimaryZoneName
   }
