@@ -18,6 +18,9 @@ env:
 
 jobs:
   deploy:
+    permissions:
+      id-token: write # require write permission to fetch an OIDC token
+
     runs-on: ubuntu-latest
 
     steps:
