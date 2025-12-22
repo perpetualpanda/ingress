@@ -11,8 +11,8 @@ param tags                     object = {
   purpose: 'public-ingress'
 }
 
-module resource_groups './modules/groups/main.bicep' = {
-  name: 'resource_groups_deployment'
+module resource_groups './modules/groups/rg.bicep' = {
+  name: 'resource-groups-deployment'
   scope: subscription()
   params: {
     location: location
@@ -22,17 +22,17 @@ module resource_groups './modules/groups/main.bicep' = {
   }
 }
 
-module dns './modules/dns/main.bicep' = {
-  name: 'dns_deployment'
+module dns './modules/dns/dns.bicep' = {
+  name: '${dns_resource_group_name}-deployment'
   scope: resourceGroup(dns_resource_group_name)
   params: {
-    dns_primary_zone_name: 'ppanda.org'
+    dnszones_primary_name: 'ppanda.org'
     tags: tags
   }
 }
 
 module edge_vm './modules/edge-vm/main.bicep' = {
-  name: 'edge_vm_deployment'
+  name: '${edge_resource_group_name}-deployment'
   scope: resourceGroup(edge_resource_group_name)
   params: {
     admin_username: 'ppanda'
