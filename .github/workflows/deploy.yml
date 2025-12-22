@@ -2,10 +2,13 @@ name: Ingress Deployment
 
 on:
   push:
-    branches: [ "main" ]
-    paths: [ "bicep/**" ]
+    branches:
+      - main
+    paths:
+      - bicep/**
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - '**'
 
 env:
   LOCATION: westus
