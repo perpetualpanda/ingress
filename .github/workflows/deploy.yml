@@ -24,7 +24,7 @@ jobs:
 
       - name: Fetch Secrets
         id: secrets # set an id so we can access the output
-        uses: bitwarden/sm-action@v2
+        uses: bitwarden/sm-action@v3.0.0-beta.3
         with:
           access_token: ${{ secrets.BITWARDEN_ACCESS_TOKEN }}
           set_env: false # do not set secrets as env vars
