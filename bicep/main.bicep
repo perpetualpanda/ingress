@@ -11,7 +11,7 @@ param tags                     object = {
   purpose: 'public-ingress'
 }
 
-module resource_groups './modules/groups/rg.bicep' = {
+module resource_groups './groups/rg.bicep' = {
   name: 'resource-groups-deployment'
   scope: subscription()
   params: {
@@ -22,7 +22,7 @@ module resource_groups './modules/groups/rg.bicep' = {
   }
 }
 
-module dns './modules/dns/dns.bicep' = {
+module dns './dns/dns.bicep' = {
   name: '${dns_resource_group_name}-deployment'
   scope: resourceGroup(dns_resource_group_name)
   params: {
@@ -31,7 +31,7 @@ module dns './modules/dns/dns.bicep' = {
   }
 }
 
-module edge_vm './modules/edge-vm/main.bicep' = {
+module edge_vm './edge-vm/main.bicep' = {
   name: '${edge_resource_group_name}-deployment'
   scope: resourceGroup(edge_resource_group_name)
   params: {

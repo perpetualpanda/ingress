@@ -1,23 +1,23 @@
-name: Bootstrap
+name: Ingress Deployment
 
 on:
   push:
     branches:
       - main
     paths:
-      - modules/**
+      - bicep/**
   pull_request:
     branches:
       - '**'
     paths:
-      - modules/**
+      - bicep/**
 
 env:
   LOCATION: westus
-  TEMPLATE_FILE: ./main.bicep
+  TEMPLATE_FILE: ./bicep/main.bicep
 
 jobs:
-  bootstrap:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +29,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Bootstrap Deployment Dry Run
+      - name: Dry Run
         if: github.event_name == 'pull_request'
         run: |
           az deployment sub what-if \
@@ -37,7 +37,7 @@ jobs:
             --template-file "${{ env.TEMPLATE_FILE }}" \
             --parameters ssh_public_key="${{ secrets.SSH_PUBLIC_KEY }}"
 
-      - name: Bootstrap Deployment
+      - name: Deployment
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           az deployment sub create \
