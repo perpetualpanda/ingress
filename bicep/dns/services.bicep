@@ -1,3 +1,4 @@
+param public_ip string
 param dns_zone_name string
 param ttl int
 
@@ -17,7 +18,7 @@ resource dnszones_primary_name_nas 'Microsoft.Network/dnszones/A@2023-07-01-prev
     TTL: ttl
     ARecords: [
       {
-        ipv4Address: '140.82.45.8'
+        ipv4Address: public_ip
       }
     ]
     targetResource: {}
@@ -35,7 +36,7 @@ resource dnszones_primary_name_status 'Microsoft.Network/dnszones/A@2023-07-01-p
     TTL: ttl
     ARecords: [
       {
-        ipv4Address: '140.82.45.8'
+        ipv4Address: public_ip
       }
     ]
     targetResource: {}
