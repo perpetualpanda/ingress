@@ -1,11 +1,11 @@
-param admin_username      string
-param location            string
-param subnet_cidr         string
-param vnet_cidr           string
-param vm_size             string
-param ssh_public_key      string
-param tags                object
-param name_suffix         string = 'edge-pub-${location}'
+param admin_username string
+param location       string
+param subnet_cidr    string
+param vnet_cidr      string
+param vm_size        string
+param ssh_public_key string
+param tags           object
+param name_suffix    string = 'edge-pub-${location}'
 
 module nsg './nsg.bicep' = {
   name: 'nsg-deployment'
