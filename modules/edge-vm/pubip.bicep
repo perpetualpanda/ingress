@@ -1,5 +1,6 @@
 param name     string
 param location string
+param tags     object
 
 resource public_ip_resource 'Microsoft.Network/publicIPAddresses@2024-07-01' = {
   name: name
