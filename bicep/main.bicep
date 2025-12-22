@@ -2,8 +2,8 @@ targetScope = 'subscription'
 
 param ssh_public_key           string
 param location                 string = 'westus'
-param dns_resource_group_name  string = 'rg-dns-pub-westus'
-param edge_resource_group_name string = 'rg-edge-pub-westus'
+param dns_resource_group_name  string = 'rg-dns-pub-${location}'
+param edge_resource_group_name string = 'rg-edge-pub-${location}'
 param tags                     object = {
   deployment_type: 'automated'
   environment: 'public'
@@ -16,13 +16,15 @@ module resource_groups './groups/rg.bicep' = {
   scope: subscription()
   params: {
     location: location
-    dns_resource_group_name: dns_resource_group_name
-    edge_resource_group_name: edge_resource_group_name
+    resource_group_names:[
+      dns_resource_group_name
+      edge_resource_group_name
+    ]
     tags: tags
   }
 }
 
-module dns './dns/dns.bicep' = {
+module dns './dns/main.bicep' = {
   name: '${dns_resource_group_name}-deployment'
   scope: resourceGroup(dns_resource_group_name)
   params: {
