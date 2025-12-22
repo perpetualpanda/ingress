@@ -17,7 +17,7 @@ env:
   TEMPLATE_FILE: ./modules/edge-vm/main.bicep
 
 jobs:
-  deploy-dns:
+  deploy-edge-vm:
     runs-on: ubuntu-latest
 
     steps:
