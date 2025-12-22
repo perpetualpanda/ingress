@@ -8,7 +8,7 @@ on:
       - bicep/**
   pull_request:
     branches:
-      - main
+      - '**'
     paths:
       - bicep/**
 
