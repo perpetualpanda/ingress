@@ -30,7 +30,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Dry Run
-        if: github.event_name == 'pull_request' && contains(github.event.pull_request.changed_files, 'bicep/')
+        if: github.event_name == 'pull_request'
         run: |
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \

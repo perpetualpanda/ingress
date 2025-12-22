@@ -16,7 +16,7 @@ module resource_groups './groups/rg.bicep' = {
   scope: subscription()
   params: {
     location: location
-    resource_group_names:[
+    rg_names:[
       dns_resource_group_name
       edge_resource_group_name
     ]
@@ -28,7 +28,7 @@ module dns './dns/main.bicep' = {
   name: '${dns_resource_group_name}-deployment'
   scope: resourceGroup(dns_resource_group_name)
   params: {
-    dnszones_primary_name: 'ppanda.org'
+    dns_zone_primary_name: 'ppanda.org'
     tags: tags
   }
 }

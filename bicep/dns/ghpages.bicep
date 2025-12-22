@@ -1,7 +1,11 @@
-param dns_zone resource
+param dns_zone_name string
 param ttl int
 
 var purpose = 'github-pages'
+
+resource dns_zone 'Microsoft.Network/dnszones@2023-07-01-preview' existing = {
+  name: dns_zone_name
+}
 
 resource Microsoft_Network_dnszones_A_dnszones_primary_name 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
   parent: dns_zone
