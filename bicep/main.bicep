@@ -16,7 +16,7 @@ module resource_groups './groups/rg.bicep' = {
   scope: subscription()
   params: {
     location: location
-    resource_group_names:[
+    rg_names:[
       dns_resource_group_name
       edge_resource_group_name
     ]

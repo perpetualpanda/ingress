@@ -9,5 +9,3 @@ resource dnszone_resource 'Microsoft.Network/dnszones@2023-07-01-preview' = {
     zoneType: 'Public'
   }
 }
-
-output dns_zone resource = dns_zone_resource

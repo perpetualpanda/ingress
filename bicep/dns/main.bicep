@@ -12,7 +12,7 @@ module dns_zone_primary './zone.bicep' = {
 module dns_gh_pages './ghpages.bicep' = {
   name: 'dns-gh-pages-deployment'
   params: {
-    dns_zone: dns_zone_primary.dns_zone
+    dns_zone_name: dns_zone_primary_name
     ttl: 3600
   }
 }
@@ -20,7 +20,7 @@ module dns_gh_pages './ghpages.bicep' = {
 module dns_protonmail './protonmail.bicep' = {
   name: 'dns-protonmail-deployment'
   params: {
-    dns_zone: dns_zone_primary.dns_zone
+    dns_zone_name: dns_zone_primary_name
     ttl: 3600
   }
 }
@@ -28,7 +28,7 @@ module dns_protonmail './protonmail.bicep' = {
 module dns_services './services.bicep' = {
   name: 'dns-services-deployment'
   params: {
-    dns_zone: dns_zone_primary.dns_zone
+    dns_zone_name: dns_zone_primary_name
     ttl: 300
   }
 }
