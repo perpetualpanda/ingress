@@ -7,7 +7,7 @@ resource nsg_resource 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
   properties: {
     securityRules: [
       {
-        name: 'Allow HTTPS'
+        name: 'allow-https'
         properties: {
           protocol: 'Tcp'
           sourcePortRange: '*'
@@ -20,7 +20,7 @@ resource nsg_resource 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
         }
       }
       {
-        name: 'Allow HTTP'
+        name: 'allow-http'
         properties: {
           protocol: 'Tcp'
           sourcePortRange: '*'
