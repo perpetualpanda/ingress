@@ -5,7 +5,8 @@ param vnet_cidr      string
 param vm_size        string
 param ssh_public_key string
 param tags           object
-param name_suffix    string = 'edge-pub-${location}'
+
+var name_suffix = 'edge-pub-${location}'
 
 module nsg './nsg.bicep' = {
   name: 'nsg-deployment'
