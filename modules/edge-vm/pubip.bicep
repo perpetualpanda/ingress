@@ -1,9 +1,11 @@
-param name string
+param name     string
 param location string
+param tags     object
 
 resource public_ip_resource 'Microsoft.Network/publicIPAddresses@2024-07-01' = {
   name: name
   location: location
+  tags: tags
   sku: {
     name: 'Standard'
   }
@@ -13,5 +15,5 @@ resource public_ip_resource 'Microsoft.Network/publicIPAddresses@2024-07-01' = {
   }
 }
 
-output public_ip_id string = public_ip_resource.id
+output public_ip_id      string = public_ip_resource.id
 output public_ip_address string = public_ip_resource.properties.ipAddress

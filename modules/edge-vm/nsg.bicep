@@ -1,20 +1,22 @@
-param name string
+param name     string
 param location string
+param tags     object
 
 resource nsg_resource 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
   name: name
   location: location
+  tags: tags
   properties: {
     securityRules: [
       {
         name: 'allow-https'
         properties: {
-          protocol: 'Tcp'
+          protocol: 'tcp'
           sourcePortRange: '*'
           destinationPortRange: '443'
           sourceAddressPrefix: '*'
           destinationAddressPrefix: '*'
-          access: 'Allow'
+          access: 'allow'
           priority: 300
           direction: 'Inbound'
         }
@@ -22,14 +24,14 @@ resource nsg_resource 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
       {
         name: 'allow-http'
         properties: {
-          protocol: 'Tcp'
+          protocol: 'tcp'
           sourcePortRange: '*'
           destinationPortRange: '80'
           sourceAddressPrefix: '*'
           destinationAddressPrefix: '*'
-          access: 'Allow'
+          access: 'allow'
           priority: 320
-          direction: 'Inbound'
+          direction: 'inbound'
         }
       }
     ]

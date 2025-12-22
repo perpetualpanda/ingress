@@ -1,11 +1,13 @@
-param name string
-param location string
+param name          string
+param location      string
 param address_space string
 param subnet_prefix string
+param tags          object
 
 resource vnet_resource 'Microsoft.Network/virtualNetworks@2024-07-01' = {
   name: name
   location: location
+  tags: tags
   properties: {
     addressSpace: {
       addressPrefixes: [

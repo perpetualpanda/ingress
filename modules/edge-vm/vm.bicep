@@ -1,13 +1,15 @@
 param admin_username string
-param location string
-param name string
-param nic_id string
+param location       string
+param name           string
+param nic_id         string
 param ssh_public_key string
-param vm_size string
+param vm_size        string
+param tags           object
 
 resource vm_resource 'Microsoft.Compute/virtualMachines@2024-11-01' = {
   name: name
   location: location
+  tags: tags
   identity: {
     type: 'SystemAssigned'
   }
