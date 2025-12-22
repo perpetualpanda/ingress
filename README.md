@@ -4,7 +4,7 @@ Infrastructure as code for homelab ingress Azure deployments
 
 ## Secret rotation
 
-Update the `AZURE_CREDENTIALS_BOOTSTRAP` secret with the format:
+Update the `AZURE_CREDENTIALS` secret with the format:
 
 ```
 {

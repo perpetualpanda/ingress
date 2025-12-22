@@ -27,7 +27,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_BOOTSTRAP }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Bootstrap Deployment Dry Run
         if: github.event_name == 'pull_request'

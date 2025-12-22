@@ -8,7 +8,7 @@ param tags                object
 param name_suffix         string = 'edge-pub-${location}'
 
 module nsg './nsg.bicep' = {
-  name: 'nsg_deployment'
+  name: 'nsg-deployment'
   params: {
     name: 'nsg-${name_suffix}'
     location: location
@@ -17,7 +17,7 @@ module nsg './nsg.bicep' = {
 }
 
 module vnet './vnet.bicep' = {
-  name: 'vnet_deployment'
+  name: 'vnet-deployment'
   params: {
     name: 'vnet-${name_suffix}'
     location: location
@@ -28,7 +28,7 @@ module vnet './vnet.bicep' = {
 }
 
 module public_ip './pubip.bicep' = {
-  name: 'public_ip_deployment'
+  name: 'public-ip-deployment'
   params: {
     name: 'ip-${name_suffix}'
     location: location
@@ -37,7 +37,7 @@ module public_ip './pubip.bicep' = {
 }
 
 module nic './nic.bicep' = {
-  name: 'nic_deployment'
+  name: 'nic-deployment'
   params: {
     name: 'nic-${name_suffix}'
     location: location
@@ -49,7 +49,7 @@ module nic './nic.bicep' = {
 }
 
 module vm './vm.bicep' = {
-  name: 'vm_deployment'
+  name: 'vm-deployment'
   params: {
     name: 'vm-${name_suffix}'
     location: location
