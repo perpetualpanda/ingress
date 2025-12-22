@@ -3,14 +3,12 @@ param location            string
 param subnet_cidr         string
 param vnet_cidr           string
 param vm_size             string
-param resource_group_name string
 param ssh_public_key      string
 param tags                object
 param name_suffix         string = 'edge-pub-${location}'
 
 module nsg './nsg.bicep' = {
   name: 'nsg_deployment'
-  scope: resourceGroup(resource_group_name)
   params: {
     name: 'nsg-${name_suffix}'
     location: location
@@ -20,7 +18,6 @@ module nsg './nsg.bicep' = {
 
 module vnet './vnet.bicep' = {
   name: 'vnet_deployment'
-  scope: resourceGroup(resource_group_name)
   params: {
     name: 'vnet-${name_suffix}'
     location: location
@@ -32,7 +29,6 @@ module vnet './vnet.bicep' = {
 
 module public_ip './pubip.bicep' = {
   name: 'public_ip_deployment'
-  scope: resourceGroup(resource_group_name)
   params: {
     name: 'ip-${name_suffix}'
     location: location
@@ -42,7 +38,6 @@ module public_ip './pubip.bicep' = {
 
 module nic './nic.bicep' = {
   name: 'nic_deployment'
-  scope: resourceGroup(resource_group_name)
   params: {
     name: 'nic-${name_suffix}'
     location: location
@@ -55,7 +50,6 @@ module nic './nic.bicep' = {
 
 module vm './vm.bicep' = {
   name: 'vm_deployment'
-  scope: resourceGroup(resource_group_name)
   params: {
     name: 'vm-${name_suffix}'
     location: location

@@ -35,7 +35,6 @@ module edge_vm './modules/edge-vm/main.bicep' = {
   params: {
     admin_username: 'ppanda'
     location: location
-    resource_group_name: edge_resource_group_name
     ssh_public_key: ssh_public_key
     subnet_cidr: '10.0.0.0/24'
     vm_size: 'Standard_B2s'
