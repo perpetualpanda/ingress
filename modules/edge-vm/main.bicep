@@ -1,11 +1,10 @@
-param admin_username      string = 'ppanda'
-param location            string = 'westus'
-param name_suffix         string = 'edge-pub-${location}'
-param subnet_cidr         string = '10.0.0.0/24'
-param vm_size             string = 'Standard_B2s'
-param vnet_cidr           string = '10.0.0.0/16'
-param resource_group_name string = 'rg-edge-pub-westus'
-param ssh_public_key      string // passed from gh secrets
+param admin_username string = 'ppanda'
+param location       string = 'westus'
+param name_suffix    string = 'edge-pub-${location}'
+param subnet_cidr    string = '10.0.0.0/24'
+param vm_size        string = 'Standard_B2s'
+param vnet_cidr      string = '10.0.0.0/16'
+param ssh_public_key string // passed from gh secrets
 
 module nsg './nsg.bicep' = {
   name: 'nsg_deployment'
@@ -28,7 +27,7 @@ module vnet './vnet.bicep' = {
 module public_ip './pubip.bicep' = {
   name: 'public_ip_deployment'
   params: {
-    name: 'ip-${name_prefix}'
+    name: 'ip-${name_suffix}'
     location: location
   }
 }

@@ -28,4 +28,4 @@ resource nic_resource 'Microsoft.Network/networkInterfaces@2024-07-01' = {
   }
 }
 
-output nic_id string = nic.id
+output nic_id string = nic_resource.id

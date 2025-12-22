@@ -13,7 +13,7 @@ resource vm_resource 'Microsoft.Compute/virtualMachines@2024-11-01' = {
   }
   properties: {
     hardwareProfile: {
-      vmSize: vmSize
+      vmSize: vm_size
     }
     storageProfile: {
       imageReference: {
