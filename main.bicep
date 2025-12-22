@@ -1,3 +1,5 @@
+targetScope = 'subscription'
+
 param ssh_public_key           string
 param location                 string = 'westus'
 param dns_resource_group_name  string = 'rg-dns-pub-westus'
