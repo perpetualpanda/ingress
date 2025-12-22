@@ -2,7 +2,7 @@
 
 Infrastructure as code for homelab ingress Azure deployments
 
-## Authentication
+## GitHub Actions Authentication
 
 Service principal is created at subscription-level scope for bootstrapping
 Azure resources. Authentication is set up via a federated identity credential.
