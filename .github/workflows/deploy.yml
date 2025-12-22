@@ -2,13 +2,10 @@ name: Ingress Deployment
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - bicep/**
+    branches: [ "main" ]
+    paths: [ "bicep/**" ]
   pull_request:
-    branches:
-      - '**'
+    branches: [ "main" ]
 
 env:
   LOCATION: westus
@@ -41,7 +38,7 @@ jobs:
             --parameters ssh_public_key="${{ secrets.SSH_PUBLIC_KEY }}"
 
       - name: Deployment
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push'
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
