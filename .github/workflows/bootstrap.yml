@@ -5,19 +5,19 @@ on:
     branches:
       - main
     paths:
-      - modules/bootstrap/**
+      - modules/**
   pull_request:
     branches:
       - '**'
     paths:
-      - modules/bootstrap/**
+      - modules/**
 
 env:
   LOCATION: westus
-  TEMPLATE_FILE: ./modules/bootstrap/main.bicep
+  TEMPLATE_FILE: ./main.bicep
 
 jobs:
-  deploy-bootstrap:
+  bootstrap:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,11 +34,13 @@ jobs:
         run: |
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.TEMPLATE_FILE }}"
+            --template-file "${{ env.TEMPLATE_FILE }}" \
+            --parameters ssh_public_key="${{ secrets.SSH_PUBLIC_KEY }}"
 
       - name: Bootstrap Deployment
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.TEMPLATE_FILE }}"
+            --template-file "${{ env.TEMPLATE_FILE }}" \
+            --parameters ssh_public_key="${{ secrets.SSH_PUBLIC_KEY }}"

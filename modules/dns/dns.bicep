@@ -1,8 +1,5 @@
-@description('Name of the primary dns zone (e.g. example.com)')
 param dnszones_primary_name string
-
-@description('Metadata tags for the primary name resource')
-param tags object
+param tags                  object
 
 resource dnszones_primary_name_resource 'Microsoft.Network/dnszones@2023-07-01-preview' = {
   name: dnszones_primary_name
