@@ -1,6 +1,3 @@
-@description('Name of the resource group to deploy the dns zone into')
-param resource_group_name   string = 'rg-dns-pub-westus'
-
 @description('Name of the primary dns zone to deploy')
 param dns_primary_zone_name string = 'ppanda.org'
 
@@ -14,7 +11,6 @@ param tags object = {
 
 module dnsModule './dns.bicep' = {
   name: 'dnsDeployment'
-  scope: resourceGroup(resource_group_name)
   params: {
     dnszones_primary_name: dns_primary_zone_name
     tags: tags
