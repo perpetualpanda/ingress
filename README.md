@@ -4,7 +4,7 @@ Infrastructure as code for homelab ingress Azure deployments
 
 ## Secret rotation
 
-Update the `AZURE_CREDENTIALS_*` secrets with the format:
+Update the `AZURE_CREDENTIALS_BOOTSTRAP` secret with the format:
 
 ```
 {
@@ -21,18 +21,3 @@ Service principal at subscription-level scope for bootstrapping azure resources
 
 - [GitHub Actions secret](https://github.com/perpetualpanda/dns/settings/secrets/actions/AZURE_CREDENTIALS_BOOTSTRAP)
 - [Service Principal (spn-gh-actions-bootstrap)](https://portal.azure.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/288b577e-7e6d-49d7-9c67-ea99e13549f1/appId/5b0f4d34-00d0-472d-8fb9-b72eea4c547e)
-
-## DNS Secret
-
-Service principal at group-level scope for deploying ppanda.org DNS zone
-
-- [GitHub Actions secret](https://github.com/perpetualpanda/dns/settings/secrets/actions/AZURE_CREDENTIALS_DNS)
-- [Service Principal (spn-gh-actions-dns)](https://portal.azure.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/845c7e99-e39f-49f2-aaa0-ae0976ff8097/appId/a76aa987-4129-4b7e-9edd-6c2393f59da2)
-
-## Edge VM Secret
-
-Service principal at group-level scope for deploying edge vm
-
-- [GitHub Actions secret](https://github.com/perpetualpanda/dns/settings/secrets/actions/AZURE_CREDENTIALS_VM)
-- [Service Principal (spn-gh-actions-vm)](https://portal.azure.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/0e43d7f4-8767-44a8-bfcf-d6a1ce47e2f1/appId/ce10eb74-8cc2-48e1-af47-21ac4dbc1c0e)
-
