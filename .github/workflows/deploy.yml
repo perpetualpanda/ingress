@@ -41,6 +41,7 @@ jobs:
           template: templates/cloud-init.yml.j2
           output_file: ./bicep/cloud-init.yml
         env:
+          SSH_PUBLIC_KEY: "${{ steps.secrets.outputs.SSH_PUBLIC_KEY }}"
           TS_OAUTH_SECRET: "${{ steps.secrets.outputs.TS_OAUTH_SECRET }}"
 
       - name: Azure Login
@@ -55,13 +56,11 @@ jobs:
         run: |
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.TEMPLATE_FILE }}" \
-            --parameters ssh_public_key="${{ steps.secrets.outputs.SSH_PUBLIC_KEY }}"
+            --template-file "${{ env.TEMPLATE_FILE }}"
 
       - name: Deployment
         if: github.event_name == 'push'
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.TEMPLATE_FILE }}" \
-            --parameters ssh_public_key="${{ steps.secrets.outputs.SSH_PUBLIC_KEY }}"
+            --template-file "${{ env.TEMPLATE_FILE }}"
