@@ -1,10 +1,11 @@
-param admin_username string
-param location       string
-param subnet_cidr    string
-param vnet_cidr      string
-param vm_size        string
-param ssh_public_key string
-param tags           object
+param admin_username  string
+param cloud_init_data string
+param location        string
+param subnet_cidr     string
+param vnet_cidr       string
+param vm_size         string
+param ssh_public_key  string
+param tags            object
 
 var name_suffix = 'edge-pub-${location}'
 
@@ -56,8 +57,11 @@ module vm './vm.bicep' = {
     location: location
     vm_size: vm_size
     admin_username: admin_username
+    cloud_init_data: cloud_init_data
     ssh_public_key: ssh_public_key
     nic_id: nic.outputs.nic_id
     tags: tags
   }
 }
+
+output edge_vm_public_ip string = public_ip.outputs.public_ip_address
