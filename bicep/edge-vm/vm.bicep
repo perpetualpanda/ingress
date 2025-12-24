@@ -1,3 +1,5 @@
+@secure()
+param admin_password  string
 param admin_username  string
 param cloud_init_data string
 param location        string
@@ -35,7 +37,7 @@ resource vm_resource 'Microsoft.Compute/virtualMachines@2024-11-01' = {
     osProfile: {
       computerName: name
       adminUsername: admin_username
-      adminPassword: 'INSECURE_TEMP_PASSWORD' // override with cloud-init
+      adminPassword: admin_password
       customData: base64(cloud_init_data)
     }
     networkProfile: {
