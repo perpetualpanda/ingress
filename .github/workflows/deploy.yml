@@ -49,7 +49,7 @@ jobs:
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.BOOTSTRAP_TEMPLATE_FILE }}" \
-            --parameters @${{ env.PARAMETERS_OUTPUT }}
+            --parameters @${{ env.PARAMETERS_FILE }}
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.SERVICES_TEMPLATE_FILE }}" \
@@ -62,7 +62,7 @@ jobs:
           az deployment sub create \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.BOOTSTRAP_TEMPLATE_FILE }}" \
-            --parameters @${{ env.PARAMETERS_OUTPUT }}
+            --parameters @${{ env.PARAMETERS_FILE }}
           az deployment sub create \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.SERVICES_TEMPLATE_FILE }}" \
