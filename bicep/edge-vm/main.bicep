@@ -8,7 +8,7 @@ param vnet_cidr       string
 param vm_size         string
 param tags            object
 
-var name_suffix = 'edge-pub-${location}'
+var name_suffix = 'edge-pub-${resourceGroup().location}'
 
 module nsg './nsg.bicep' = {
   name: 'nsg-deployment'

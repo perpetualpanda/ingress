@@ -3,12 +3,12 @@ param ttl int
 
 var purpose = 'discord'
 
-resource dns_zone_resource 'Microsoft.Network/dnszones@2023-07-01-preview' existing = {
+resource dns_zone 'Microsoft.Network/dnszones@2023-07-01-preview' existing = {
   name: dns_zone_name
 }
 
-resource dns_zone_txt_discord_resource 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
-  parent: dns_zone_resource
+resource dns_zone_txt_discord 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
+  parent: dns_zone
   name: '_discord'
   properties: {
     metadata: {

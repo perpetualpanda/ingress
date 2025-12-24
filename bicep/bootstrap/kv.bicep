@@ -25,7 +25,7 @@ resource key_vault 'Microsoft.KeyVault/vaults@2025-05-01' = {
         permissions: {
           secrets: ['get', 'list']
         }
-      },
+      }
       {
         // allow write access to the key vault for SPN of the current deployment
         object_id: deployment().identity.principalId

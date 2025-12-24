@@ -15,9 +15,9 @@ resource vm_resource 'Microsoft.Compute/virtualMachines@2024-11-01' = {
   location: resourceGroup().location
   tags: tags
   identity: {
-    type: 'UserAssigned',
+    type: 'UserAssigned'
     userAssignedIdentities: {
-      '/subscriptions/${subscription_id}/resourceGroups/${rg_name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed_id_name}': {}
+      '/subscriptions/${subscription_id}/resourceGroups/${rg_name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${managed_id_name}': {}
     }
   }
   properties: {

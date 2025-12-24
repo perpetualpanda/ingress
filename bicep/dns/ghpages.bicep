@@ -3,12 +3,12 @@ param ttl int
 
 var purpose = 'github-pages'
 
-resource dns_zone_resource 'Microsoft.Network/dnszones@2023-07-01-preview' existing = {
+resource dns_zone 'Microsoft.Network/dnszones@2023-07-01-preview' existing = {
   name: dns_zone_name
 }
 
-resource dns_zone_a_resource 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
-  parent: dns_zone_resource
+resource dns_zone_a 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
+  parent: dns_zone
   name: '@'
   properties: {
     metadata: {
@@ -34,8 +34,8 @@ resource dns_zone_a_resource 'Microsoft.Network/dnszones/A@2023-07-01-preview' =
   }
 }
 
-resource dns_zone_aaaa_resource 'Microsoft.Network/dnszones/AAAA@2023-07-01-preview' = {
-  parent: dns_zone_resource
+resource dns_zone_aaaa 'Microsoft.Network/dnszones/AAAA@2023-07-01-preview' = {
+  parent: dns_zone
   name: '@'
   properties: {
     metadata: {
@@ -61,8 +61,8 @@ resource dns_zone_aaaa_resource 'Microsoft.Network/dnszones/AAAA@2023-07-01-prev
   }
 }
 
-resource dns_zone_txt_github_pages_challenge_perpetualpanda_resource 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
-  parent: dns_zone_resource
+resource dns_zone_txt_github_pages_challenge 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
+  parent: dns_zone
   name: '_github-pages-challenge-perpetualpanda'
   properties: {
     metadata: {

@@ -1,18 +1,13 @@
 targetScope = 'subscription'
 
 @secure()
-param edge_vm_admin_password   string
-param location                 string = 'westus'
-param dns_resource_group_name  string = 'rg-dns-pub-${location}'
-param edge_resource_group_name string = 'rg-edge-pub-${location}'
-param tags                     object = {
-  deployment_type: 'automated'
-  environment: 'public'
-  project: 'homelab'
-  purpose: 'public-ingress'
-}
-
-var edge_vm_managed_id_name = 'mi-edge-pub-${location}'
+param edge_vm_admin_password      string
+param edge_vm_managed_id_name     string
+param edge_vm_resource_group_name string
+param edge_vm_key_vault_name      string
+param dns_resource_group_name     string
+param location                    string
+param tags                        object
 
 module resource_groups './bootstrap/rg.bicep' = {
   name: 'resource-groups-deployment'
@@ -31,7 +26,7 @@ module key_vault './bootstrap/kv.bicep' = {
   name: '${edge_resource_group_name}-key-vault-deployment'
   scope: resourceGroup(edge_resource_group_name)
   params: {
-    key_vault_name: 'kv-edge-pub-${location}'
+    key_vault_name: edge_vm_key_vault_name
     managed_id_name: edge_vm_managed_id_name
     tags: tags
   }
