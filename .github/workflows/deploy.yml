@@ -35,6 +35,7 @@ jobs:
             af08df26-6767-4b62-ba8e-b3bb01492f1f > AZURE_TENANT_ID
             4b6aeda8-517b-482c-a290-b3bb0149ec82 > AZURE_SUBSCRIPTION_ID
             357e0951-4bba-47a9-9e48-b3bd0024684b > TEMP_VM_ADMIN_PASSWORD
+            2c81cc33-4149-44b2-bf6c-b3bc0042eff7 > TS_OAUTH_SECRET
 
       - name: Azure Login
         uses: azure/login@v1
@@ -56,13 +57,25 @@ jobs:
             --parameters @${{ env.PARAMETERS_FILE }} \
             --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}"
 
-      - name: Deployment
+      - name: Bootstrap Deployment
         if: github.event_name == 'push'
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.BOOTSTRAP_TEMPLATE_FILE }}" \
             --parameters @${{ env.PARAMETERS_FILE }}
+
+      - name: Set Azure Key Vault Secrets
+        if: github.event_name == 'push'
+        run: |
+          az keyvault secret set \
+            --vault-name "kv-edge-pub-${{ env.LOCATION }}" \
+            --name "TS_OAUTH_SECRET" \
+            --value "${{ steps.secrets.outputs.TS_OAUTH_SECRET }}"
+
+      - name: Deployment
+        if: github.event_name == 'push'
+        run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.SERVICES_TEMPLATE_FILE }}" \
