@@ -22,7 +22,7 @@ resource key_vault 'Microsoft.KeyVault/vaults@2025-05-01' = {
     accessPolicies: [
       {
         // allow read access to the key vault for the managed identity
-        objectId: user_assigned_identity.id
+        objectId: user_assigned_identity.properties.principalId
         tenantId: tenant().tenantId
         permissions: {
           secrets: ['get', 'list']
