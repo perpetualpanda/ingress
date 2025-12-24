@@ -33,16 +33,6 @@ jobs:
             af08df26-6767-4b62-ba8e-b3bb01492f1f > AZURE_TENANT_ID
             4b6aeda8-517b-482c-a290-b3bb0149ec82 > AZURE_SUBSCRIPTION_ID
             a1ba5add-9269-407f-a83f-b3bb01497440 > SSH_PUBLIC_KEY
-            2c81cc33-4149-44b2-bf6c-b3bc0042eff7 > TS_OAUTH_SECRET
-
-      - name: Render cloud-init.yml
-        uses: cuchi/jinja2-action@v1.3.0
-        with:
-          template: templates/cloud-init.yml.j2
-          output_file: ./bicep/cloud-init.yml
-        env:
-          SSH_PUBLIC_KEY: "${{ steps.secrets.outputs.SSH_PUBLIC_KEY }}"
-          TS_OAUTH_SECRET: "${{ steps.secrets.outputs.TS_OAUTH_SECRET }}"
 
       - name: Azure Login
         uses: azure/login@v1
