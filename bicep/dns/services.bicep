@@ -7,7 +7,7 @@ resource dns_zone 'Microsoft.Network/dnszones@2023-07-01-preview' existing = {
   name: dns_zone_name
 }
 
-resource dnszones_primary_name_nas 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
+resource dns_zone_a_nas 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
   parent: dns_zone
   name: 'nas'
   properties: {
@@ -25,7 +25,7 @@ resource dnszones_primary_name_nas 'Microsoft.Network/dnszones/A@2023-07-01-prev
   }
 }
 
-resource dnszones_primary_name_status 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
+resource dns_zone_a_status 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
   parent: dns_zone
   name: 'status'
   properties: {

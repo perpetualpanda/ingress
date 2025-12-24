@@ -1,5 +1,4 @@
 param name         string
-param location     string
 param subnet_id    string
 param public_ip_id string
 param nsg_id       string
@@ -7,7 +6,7 @@ param tags         object
 
 resource nic_resource 'Microsoft.Network/networkInterfaces@2024-07-01' = {
   name: name
-  location: location
+  location: resourceGroup().location
   tags: tags
   properties: {
     ipConfigurations: [

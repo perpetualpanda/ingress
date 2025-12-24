@@ -9,12 +9,22 @@ module dns_zone_primary './zone.bicep' = {
   }
 }
 
+module dns_discord './discord.bicep' = {
+  name: 'dns-discord-deployment'
+  params: {
+    dns_zone_name: dns_zone_primary_name
+    ttl: 3600
+  }
+  dependsOn: [ dns_zone_primary ]
+}
+
 module dns_gh_pages './ghpages.bicep' = {
   name: 'dns-gh-pages-deployment'
   params: {
     dns_zone_name: dns_zone_primary_name
     ttl: 3600
   }
+  dependsOn: [ dns_zone_primary ]
 }
 
 module dns_protonmail './protonmail.bicep' = {
@@ -23,6 +33,7 @@ module dns_protonmail './protonmail.bicep' = {
     dns_zone_name: dns_zone_primary_name
     ttl: 3600
   }
+  dependsOn: [ dns_zone_primary ]
 }
 
 module dns_services './services.bicep' = {
@@ -31,4 +42,5 @@ module dns_services './services.bicep' = {
     dns_zone_name: dns_zone_primary_name
     ttl: 300
   }
+  dependsOn: [ dns_zone_primary ]
 }

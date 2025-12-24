@@ -10,6 +10,8 @@ on:
 env:
   LOCATION: westus
   TEMPLATE_FILE: ./bicep/main.bicep
+  PARAMETERS_TEMPLATE: ./bicep/templates/parameters.json.j2
+  PARAMETERS_OUTPUT: parameters.json
 
 jobs:
   deploy:
@@ -41,13 +43,22 @@ jobs:
           tenant-id: ${{ steps.secrets.outputs.AZURE_TENANT_ID }}
           subscription-id: ${{ steps.secrets.outputs.AZURE_SUBSCRIPTION_ID }}
 
+      - name: Render Deployment Parameters
+        uses: cuchi/jinja2-action@v1.3.0
+        with:
+          template: ${{ env.PARAMETERS_TEMPLATE }}
+          output_file: ${{ env.PARAMETERS_OUTPUT }}
+        env:
+          LOCATION: ${{ env.LOCATION }}
+          TEMP_VM_ADMIN_PASSWORD: ${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}
+
       - name: Dry Run
         if: github.event_name == 'pull_request'
         run: |
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.TEMPLATE_FILE }}" \
-            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}"
+            --parameters @${{ env.PARAMETERS_OUTPUT }}
 
       - name: Deployment
         if: github.event_name == 'push'
@@ -55,4 +66,4 @@ jobs:
           az deployment sub create \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.TEMPLATE_FILE }}" \
-            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}"
+            --parameters @${{ env.PARAMETERS_OUTPUT }}
