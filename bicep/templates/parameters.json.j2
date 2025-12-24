@@ -1,21 +1,21 @@
 {
   "edge_vm_admin_password": {
-    "value": "{{ TEMP_VM_ADMIN_PASSWORD }}"
+    "value": "{{ env['TEMP_VM_ADMIN_PASSWORD'] }}"
   },
   "location": {
-    "value": "{{ LOCATION }}"
+    "value": "{{ env['LOCATION'] }}"
   },
   "dns_resource_group_name": {
-    "value": "rg-dns-pub-{{ LOCATION }}"
+    "value": "rg-dns-pub-{{ env['LOCATION'] }}"
   },
   "edge_vm_resource_group_name": {
-    "value": "rg-edge-pub-{{ LOCATION }}"
+    "value": "rg-edge-pub-{{ env['LOCATION'] }}"
   },
   "edge_vm_managed_id_name": {
-    "value": "mi-edge-pub-{{ LOCATION }}"
+    "value": "mi-edge-pub-{{ env['LOCATION'] }}"
   },
   "edge_vm_key_vault_name": {
-    "value": "kv-edge-pub-{{ LOCATION }}"
+    "value": "kv-edge-pub-{{ env['LOCATION'] }}"
   },
   "tags": {
     "value": {
