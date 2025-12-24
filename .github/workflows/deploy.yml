@@ -6,6 +6,13 @@ on:
     paths: [ "bicep/**" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Perform a dry run (true) or real deployment (false)'
+        required: true
+        default: 'true'
+        type: boolean
 
 env:
   LOCATION: westus
@@ -45,7 +52,7 @@ jobs:
           subscription-id: ${{ steps.secrets.outputs.AZURE_SUBSCRIPTION_ID }}
 
       - name: Dry Run
-        if: github.event_name == 'pull_request'
+        if: ${{ github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == true) }}
         run: |
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
@@ -58,7 +65,7 @@ jobs:
             --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}"
 
       - name: Bootstrap Deployment
-        if: github.event_name == 'push'
+        if: ${{ github.event_name == 'push'|| (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
@@ -66,7 +73,7 @@ jobs:
             --parameters @${{ env.PARAMETERS_FILE }}
 
       - name: Set Azure Key Vault Secrets
-        if: github.event_name == 'push'
+        if: ${{ github.event_name == 'push'|| (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
         run: |
           az keyvault secret set \
             --vault-name "kv-edge-pub-${{ env.LOCATION }}-1" \
@@ -74,7 +81,7 @@ jobs:
             --value "${{ steps.secrets.outputs.TS_OAUTH_SECRET }}"
 
       - name: Deployment
-        if: github.event_name == 'push'
+        if: ${{ github.event_name == 'push'|| (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
