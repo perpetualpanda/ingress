@@ -4,7 +4,6 @@ param location        string
 param subnet_cidr     string
 param vnet_cidr       string
 param vm_size         string
-param ssh_public_key  string
 param tags            object
 
 var name_suffix = 'edge-pub-${location}'
@@ -58,7 +57,6 @@ module vm './vm.bicep' = {
     vm_size: vm_size
     admin_username: admin_username
     cloud_init_data: cloud_init_data
-    ssh_public_key: ssh_public_key
     nic_id: nic.outputs.nic_id
     tags: tags
   }

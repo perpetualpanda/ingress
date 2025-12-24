@@ -32,7 +32,6 @@ jobs:
             a2e022b2-6efc-4376-aff6-b3bb0148e797 > AZURE_CLIENT_ID
             af08df26-6767-4b62-ba8e-b3bb01492f1f > AZURE_TENANT_ID
             4b6aeda8-517b-482c-a290-b3bb0149ec82 > AZURE_SUBSCRIPTION_ID
-            a1ba5add-9269-407f-a83f-b3bb01497440 > SSH_PUBLIC_KEY
 
       - name: Azure Login
         uses: azure/login@v1
@@ -46,13 +45,11 @@ jobs:
         run: |
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.TEMPLATE_FILE }}" \
-            --parameters ssh_public_key="${{ steps.secrets.outputs.SSH_PUBLIC_KEY }}"
+            --template-file "${{ env.TEMPLATE_FILE }}"
 
       - name: Deployment
         if: github.event_name == 'push'
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.TEMPLATE_FILE }}" \
-            --parameters ssh_public_key="${{ steps.secrets.outputs.SSH_PUBLIC_KEY }}"
+            --template-file "${{ env.TEMPLATE_FILE }}"

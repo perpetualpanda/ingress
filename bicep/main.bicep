@@ -1,6 +1,5 @@
 targetScope = 'subscription'
 
-param ssh_public_key           string
 param location                 string = 'westus'
 param dns_resource_group_name  string = 'rg-dns-pub-${location}'
 param edge_resource_group_name string = 'rg-edge-pub-${location}'
@@ -31,7 +30,6 @@ module edge_vm './edge-vm/main.bicep' = {
     admin_username: 'ppanda'
     cloud_init_data: loadTextContent('../templates/cloud-init.yml')
     location: location
-    ssh_public_key: ssh_public_key
     subnet_cidr: '10.0.0.0/24'
     vm_size: 'Standard_B2s'
     vnet_cidr: '10.0.0.0/16'
