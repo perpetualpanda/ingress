@@ -37,6 +37,17 @@ resource vm_resource 'Microsoft.Compute/virtualMachines@2024-11-01' = {
       computerName: name
       adminUsername: admin_username
       customData: base64(cloud_init_data)
+      linuxConfiguration: {
+        disablePasswordAuthentication: true
+        ssh: {
+          publicKeys: [
+            {
+              path: '/home/${admin_username}/.ssh/authorized_keys'
+              keyData: ssh_public_key
+            }
+          ]
+        }
+      }
     }
     networkProfile: {
       networkInterfaces: [

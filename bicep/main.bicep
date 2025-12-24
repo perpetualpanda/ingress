@@ -24,15 +24,6 @@ module resource_groups './groups/rg.bicep' = {
   }
 }
 
-module dns './dns/main.bicep' = {
-  name: '${dns_resource_group_name}-deployment'
-  scope: resourceGroup(dns_resource_group_name)
-  params: {
-    dns_zone_primary_name: 'ppanda.org'
-    tags: tags
-  }
-}
-
 module edge_vm './edge-vm/main.bicep' = {
   name: '${edge_resource_group_name}-deployment'
   scope: resourceGroup(edge_resource_group_name)
@@ -46,4 +37,19 @@ module edge_vm './edge-vm/main.bicep' = {
     vnet_cidr: '10.0.0.0/16'
     tags: tags
   }
+  dependsOn: [
+    resource_groups
+  ]
+}
+
+module dns './dns/main.bicep' = {
+  name: '${dns_resource_group_name}-deployment'
+  scope: resourceGroup(dns_resource_group_name)
+  params: {
+    dns_zone_primary_name: 'ppanda.org'
+    tags: tags
+  }
+  dependsOn: [
+    resource_groups
+  ]
 }
