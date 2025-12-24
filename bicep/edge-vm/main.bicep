@@ -1,3 +1,5 @@
+@secure()
+param admin_password  string
 param admin_username  string
 param cloud_init_data string
 param location        string
@@ -56,6 +58,7 @@ module vm './vm.bicep' = {
     location: location
     vm_size: vm_size
     admin_username: admin_username
+    admin_password: admin_password
     cloud_init_data: cloud_init_data
     nic_id: nic.outputs.nic_id
     tags: tags
