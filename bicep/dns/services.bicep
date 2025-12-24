@@ -3,12 +3,12 @@ param ttl int
 
 var purpose = 'public-homelab-service'
 
-resource dns_zone 'Microsoft.Network/dnszones@2023-07-01-preview' existing = {
+resource dns_zone_resource 'Microsoft.Network/dnszones@2023-07-01-preview' existing = {
   name: dns_zone_name
 }
 
-resource dnszones_primary_name_nas 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
-  parent: dns_zone
+resource dns_zone_a_nas_resource 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
+  parent: dns_zone_resource
   name: 'nas'
   properties: {
     metadata: {
@@ -25,8 +25,8 @@ resource dnszones_primary_name_nas 'Microsoft.Network/dnszones/A@2023-07-01-prev
   }
 }
 
-resource dnszones_primary_name_status 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
-  parent: dns_zone
+resource dns_zone_a_status_resource 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
+  parent: dns_zone_resource
   name: 'status'
   properties: {
     metadata: {

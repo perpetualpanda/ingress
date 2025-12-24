@@ -9,6 +9,14 @@ module dns_zone_primary './zone.bicep' = {
   }
 }
 
+module dns_discord './discord.bicep' = {
+  name: 'dns-discord-deployment'
+  params: {
+    dns_zone_name: dns_zone_primary_name
+    ttl: 3600
+  }
+}
+
 module dns_gh_pages './ghpages.bicep' = {
   name: 'dns-gh-pages-deployment'
   params: {

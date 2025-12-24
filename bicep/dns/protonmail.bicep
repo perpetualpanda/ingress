@@ -3,12 +3,12 @@ param ttl int
 
 var purpose = 'protonmail'
 
-resource dns_zone 'Microsoft.Network/dnszones@2023-07-01-preview' existing = {
+resource dns_zone_resource 'Microsoft.Network/dnszones@2023-07-01-preview' existing = {
   name: dns_zone_name
 }
 
-resource dnszones_primary_name_protonmail_domainkey 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
-  parent: dns_zone
+resource dns_zone_cname_protonmail_domainkey_resource 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
+  parent: dns_zone_resource
   name: 'protonmail._domainkey'
   properties: {
     metadata: {
@@ -23,8 +23,8 @@ resource dnszones_primary_name_protonmail_domainkey 'Microsoft.Network/dnszones/
   }
 }
 
-resource dnszones_primary_name_protonmail2_domainkey 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
-  parent: dns_zone
+resource dns_zone_cname_protonmail2_domainkey_resource 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
+  parent: dns_zone_resource
   name: 'protonmail2._domainkey'
   properties: {
     metadata: {
@@ -39,8 +39,8 @@ resource dnszones_primary_name_protonmail2_domainkey 'Microsoft.Network/dnszones
   }
 }
 
-resource dnszones_primary_name_protonmail3_domainkey 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
-  parent: dns_zone
+resource dns_zone_cname_protonmail3_domainkey_resource 'Microsoft.Network/dnszones/CNAME@2023-07-01-preview' = {
+  parent: dns_zone_resource
   name: 'protonmail3._domainkey'
   properties: {
     metadata: {
@@ -55,8 +55,8 @@ resource dnszones_primary_name_protonmail3_domainkey 'Microsoft.Network/dnszones
   }
 }
 
-resource Microsoft_Network_dnszones_MX_dnszones_primary_name 'Microsoft.Network/dnszones/MX@2023-07-01-preview' = {
-  parent: dns_zone
+resource dns_zone_mx_resource 'Microsoft.Network/dnszones/MX@2023-07-01-preview' = {
+  parent: dns_zone_resource
   name: '@'
   properties: {
     metadata: {
@@ -78,8 +78,8 @@ resource Microsoft_Network_dnszones_MX_dnszones_primary_name 'Microsoft.Network/
   }
 }
 
-resource Microsoft_Network_dnszones_TXT_dnszones_primary_name 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
-  parent: dns_zone
+resource dns_zone_txt_resource 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
+  parent: dns_zone_resource
   name: '@'
   properties: {
     metadata: {
@@ -103,8 +103,8 @@ resource Microsoft_Network_dnszones_TXT_dnszones_primary_name 'Microsoft.Network
   }
 }
 
-resource dnszones_primary_name_dmarc 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
-  parent: dns_zone
+resource dns_zone_dmarc_resource 'Microsoft.Network/dnszones/TXT@2023-07-01-preview' = {
+  parent: dns_zone_resource
   name: '_dmarc'
   properties: {
     metadata: {
