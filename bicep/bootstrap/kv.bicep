@@ -22,14 +22,16 @@ resource key_vault 'Microsoft.KeyVault/vaults@2025-05-01' = {
     accessPolicies: [
       {
         // allow read access to the key vault for the managed identity
-        object_id: user_assigned_identity.id
+        objectId: user_assigned_identity.id
+        tenantId: tenant().tenantId
         permissions: {
           secrets: ['get', 'list']
         }
       }
       {
         // allow write access to the key vault for the ci service principal
-        object_id: ci_service_principal_id
+        objectId: ci_service_principal_id
+        tenantId: tenant().tenantId
         permissions: {
           secrets: ['get', 'list', 'set', 'delete']
         }
