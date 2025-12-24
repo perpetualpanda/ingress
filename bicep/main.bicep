@@ -1,5 +1,7 @@
 targetScope = 'subscription'
 
+@secure()
+param edge_vm_admin_password   string
 param location                 string = 'westus'
 param dns_resource_group_name  string = 'rg-dns-pub-${location}'
 param edge_resource_group_name string = 'rg-edge-pub-${location}'
@@ -28,6 +30,7 @@ module edge_vm './edge-vm/main.bicep' = {
   scope: resourceGroup(edge_resource_group_name)
   params: {
     admin_username: 'ppanda'
+    admin_password: edge_vm_admin_password
     cloud_init_data: loadTextContent('../templates/cloud-init.yml')
     location: location
     subnet_cidr: '10.0.0.0/24'
