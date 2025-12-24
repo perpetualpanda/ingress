@@ -31,7 +31,7 @@ module edge_vm './edge-vm/main.bicep' = {
   params: {
     admin_username: 'ppanda'
     admin_password: edge_vm_admin_password
-    cloud_init_data: loadTextContent('../templates/cloud-init.yml')
+    cloud_init_data: loadTextContent('./templates/cloud-init.yml')
     location: location
     subnet_cidr: '10.0.0.0/24'
     vm_size: 'Standard_B2s'
