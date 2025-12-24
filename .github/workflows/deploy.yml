@@ -69,7 +69,7 @@ jobs:
         if: github.event_name == 'push'
         run: |
           az keyvault secret set \
-            --vault-name "kv-edge-pub-${{ env.LOCATION }}" \
+            --vault-name "kv-edge-pub-${{ env.LOCATION }}-1" \
             --name "TS_OAUTH_SECRET" \
             --value "${{ steps.secrets.outputs.TS_OAUTH_SECRET }}"
 
