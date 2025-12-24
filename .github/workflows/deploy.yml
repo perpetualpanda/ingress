@@ -43,36 +43,28 @@ jobs:
           tenant-id: ${{ steps.secrets.outputs.AZURE_TENANT_ID }}
           subscription-id: ${{ steps.secrets.outputs.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Dry Run Bootstrap Deployment
+      - name: Dry Run
         if: github.event_name == 'pull_request'
         run: |
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.BOOTSTRAP_TEMPLATE_FILE }}" \
             --parameters @${{ env.PARAMETERS_FILE }}
-
-      - name: Dry Run Services Deployment
-        if: github.event_name == 'pull_request'
-        run: |
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.SERVICES_TEMPLATE_FILE }}" \
             --parameters @${{ env.PARAMETERS_FILE }} \
-            --parameters edge_vm_admin_password=${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}
+            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}"
 
-      - name: Run Bootstrap Deployment
+      - name: Deployment
         if: github.event_name == 'push'
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.BOOTSTRAP_TEMPLATE_FILE }}" \
             --parameters @${{ env.PARAMETERS_FILE }}
-
-      - name: Run Services Deployment
-        if: github.event_name == 'push'
-        run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.SERVICES_TEMPLATE_FILE }}" \
             --parameters @${{ env.PARAMETERS_FILE }} \
-            --parameters edge_vm_admin_password=${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}
+            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}"
