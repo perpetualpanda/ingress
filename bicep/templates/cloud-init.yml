@@ -45,7 +45,7 @@ sysctl:
 
 runcmd:
   - az login --identity  # automatically uses vm's managed identity
-  - OAUTH_KEY=$(az keyvault secret show --vault-name kv-edge-pub-westus --name TS_OAUTH_SECRET --query value -o tsv)
+  - OAUTH_KEY=$(az keyvault secret show --vault-name kv-edge-pub-westus-1 --name TS_OAUTH_SECRET --query value -o tsv)
   - tailscale up --auth-key=$OAUTH_KEY?ephemeral=false&preauthorized=true --ssh --advertise-exit-node --advertise-tags=tag:reverse-proxy
 
 final_message: "system is up, after $UPTIME seconds"
