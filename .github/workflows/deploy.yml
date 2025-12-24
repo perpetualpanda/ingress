@@ -46,11 +46,13 @@ jobs:
         run: |
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.TEMPLATE_FILE }}"
+            --template-file "${{ env.TEMPLATE_FILE }}" \
+            --parameters ssh_public_key="${{ steps.secrets.outputs.SSH_PUBLIC_KEY }}"
 
       - name: Deployment
         if: github.event_name == 'push'
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.TEMPLATE_FILE }}"
+            --template-file "${{ env.TEMPLATE_FILE }}" \
+            --parameters ssh_public_key="${{ steps.secrets.outputs.SSH_PUBLIC_KEY }}"
