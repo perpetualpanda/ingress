@@ -14,7 +14,7 @@ module edge_vm './edge-vm/main.bicep' = {
     admin_username: 'ppanda'
     admin_password: edge_vm_admin_password
     managed_id_name: edge_vm_managed_id_name
-    cloud_init_data: loadTextContent('./templates/cloud-init.yml')
+    cloud_init_data: loadTextContent('../templates/cloud-init.yml')
     subnet_cidr: '10.0.0.0/24'
     vm_size: 'Standard_B2s'
     vnet_cidr: '10.0.0.0/16'
