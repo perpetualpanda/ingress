@@ -11,16 +11,17 @@ timezone: America/Los_Angeles
 apt:
   sources:
     tailscale.list:
-      source: "deb [arch={{ 'amd64' if v1.machine == 'x86_64' else 'arm64' }} signed-by=/etc/apt/keyrings/tailscale.gpg] https://pkgs.tailscale.com/stable/ubuntu {{ v1.distro_release }} main"
+      source: "deb [arch={{ 'amd64' if v1.machine == 'x86_64' else 'arm64' }} signed-by=/etc/apt/trusted.gpg.d/tailscale.gpg] https://pkgs.tailscale.com/stable/ubuntu {{ v1.distro_release }} main"
       keyid: 2596A99EAAB33821893C0A79458CA832957F5868
-      keyring: /etc/apt/keyrings/tailscale.gpg
     docker.list:
-      source: "deb [arch={{ 'amd64' if v1.machine == 'x86_64' else 'arm64' }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ v1.distro_release }} stable"
+      source: "deb [arch={{ 'amd64' if v1.machine == 'x86_64' else 'arm64' }} signed-by=/etc/apt/trusted.gpg.d/docker.gpg] https://download.docker.com/linux/ubuntu {{ v1.distro_release }} stable"
       keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
-      keyring: /etc/apt/keyrings/docker.gpg
+    az-cli.list:
+      source: "deb [arch={{ 'amd64' if v1.machine == 'x86_64' else 'arm64' }} signed-by=/etc/apt/trusted.gpg.d/az-cli.gpg] https://packages.microsoft.com/repos/azure-cli {{ v1.distro_release }} main"
+      keyid: BC528686B50D79E339D3721CEB3E94ADBE1229CF
 
 packages:
-  - azure-cli
+  - az-cli
   - docker-ce
   - docker-ce-cli
   - tailscale
@@ -45,7 +46,7 @@ sysctl:
 
 runcmd:
   - az login --identity  # automatically uses vm's managed identity
-  - OAUTH_KEY=$(az keyvault secret show --vault-name kv-edge-pub-westus-1 --name ts-oauth-secret --query value -o tsv)
-  - tailscale up --auth-key=$OAUTH_KEY?ephemeral=false&preauthorized=true --ssh --advertise-exit-node --advertise-tags=tag:reverse-proxy
+  - TS_OAUTH_SECRET=$(az keyvault secret show --vault-name kv-edge-pub-westus-1 --name ts-oauth-secret --query value -o tsv)
+  - tailscale up --auth-key=$TS_OAUTH_SECRET?ephemeral=false&preauthorized=true --ssh --advertise-exit-node --advertise-tags=tag:reverse-proxy
 
 final_message: "system is up, after $UPTIME seconds"
