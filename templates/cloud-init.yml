@@ -1,0 +1,45 @@
+## template: jinja
+#cloud-config
+---
+disable_root: true
+package_update: true
+package_upgrade: true
+ssh_pwauth: false
+ssh_import_id: [ 'gh:yuzhoumo' ]
+timezone: America/Los_Angeles
+
+apt:
+  sources:
+    tailscale.list:
+      source: "deb [arch={{ 'amd64' if v1.machine == 'x86_64' else 'arm64' }} signed-by=/etc/apt/keyrings/tailscale.gpg] https://pkgs.tailscale.com/stable/ubuntu {{ v1.distro_release }} main"
+      keyid: 2596A99EAAB33821893C0A79458CA832957F5868
+      keyring: /etc/apt/keyrings/tailscale.gpg
+    docker.list:
+      source: "deb [arch={{ 'amd64' if v1.machine == 'x86_64' else 'arm64' }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ v1.distro_release }} stable"
+      keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+      keyring: /etc/apt/keyrings/docker.gpg
+
+packages:
+  - docker-ce
+  - docker-ce-cli
+  - tailscale
+
+groups:
+  - docker
+
+system_info:
+  default_user:
+    groups: [ sudo, docker ]
+
+systemd:
+  units:
+    - name: docker.service
+      enabled: true
+      state: started
+
+sysctl:
+  # configure ip forwarding for tailscale
+  net.ipv4.ip_forward: 1
+  net.ipv6.conf.all.forwarding: 1
+
+final_message: "system is up, after $UPTIME seconds"
