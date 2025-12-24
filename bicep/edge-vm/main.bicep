@@ -1,6 +1,7 @@
 @secure()
 param admin_password  string
 param admin_username  string
+param managed_id_name string
 param cloud_init_data string
 param subnet_cidr     string
 param vnet_cidr       string
@@ -53,6 +54,7 @@ module vm './vm.bicep' = {
     vm_size: vm_size
     admin_username: admin_username
     admin_password: admin_password
+    managed_id_name: managed_id_name
     cloud_init_data: cloud_init_data
     nic_id: nic.outputs.nic_id
     tags: tags

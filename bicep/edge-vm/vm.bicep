@@ -6,13 +6,19 @@ param name            string
 param nic_id          string
 param vm_size         string
 param tags            object
+param managed_id_name string
+param subscription_id string = subscription().subscriptionId
+param rg_name         string = resourceGroup().name
 
 resource vm_resource 'Microsoft.Compute/virtualMachines@2024-11-01' = {
   name: name
   location: resourceGroup().location
   tags: tags
   identity: {
-    type: 'SystemAssigned'
+    type: 'UserAssigned',
+    userAssignedIdentities: {
+      '/subscriptions/${subscription_id}/resourceGroups/${rg_name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed_id_name}': {}
+    }
   }
   properties: {
     hardwareProfile: {
