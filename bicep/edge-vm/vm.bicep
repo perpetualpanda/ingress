@@ -36,6 +36,9 @@ resource vm_resource 'Microsoft.Compute/virtualMachines@2024-11-01' = {
       computerName: name
       adminUsername: admin_username
       customData: base64(cloud_init_data)
+      linuxConfiguration: {
+        disablePasswordAuthentication: true
+      }
     }
     networkProfile: {
       networkInterfaces: [
