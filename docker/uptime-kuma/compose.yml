@@ -4,12 +4,15 @@ services:
     container_name: uptime-kuma
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./uptime-kuma-data:/app/data
+      - uptime-kuma-data:/app/data
     ports:
       - 3001:3001
     networks:
       - proxy-network
     restart: always
+
+volumes:
+  uptime-kuma-data:
 
 networks:
   proxy-network:
