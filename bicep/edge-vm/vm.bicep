@@ -2,7 +2,6 @@
 param admin_password  string
 param admin_username  string
 param cloud_init_data string
-param location        string
 param name            string
 param nic_id          string
 param vm_size         string
@@ -10,7 +9,7 @@ param tags            object
 
 resource vm_resource 'Microsoft.Compute/virtualMachines@2024-11-01' = {
   name: name
-  location: location
+  location: resourceGroup().location
   tags: tags
   identity: {
     type: 'SystemAssigned'
