@@ -12,7 +12,7 @@ env:
   BOOTSTRAP_TEMPLATE_FILE: ./bicep/bootstrap/main.bicep
   SERVICES_TEMPLATE_FILE: ./bicep/services/main.bicep
   PARAMETERS_TEMPLATE: ./bicep/templates/parameters.json.j2
-  PARAMETERS_OUTPUT: parameters.json
+  PARAMETERS_OUTPUT: ./bicep/templates/parameters.json
 
 jobs:
   deploy:
