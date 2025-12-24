@@ -18,8 +18,8 @@ resource key_vault 'Microsoft.KeyVault/vaults@2025-05-01' = {
       family: 'A'
       name: 'standard'
     }
-    tenant_id: tenant().tenantId
-    access_policies: [
+    tenantId: tenant().tenantId
+    accessPolicies: [
       {
         // allow read access to the key vault for the managed identity
         object_id: user_assigned_identity.id
