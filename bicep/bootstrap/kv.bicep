@@ -1,7 +1,8 @@
-param key_vault_name          string
-param managed_id_name         string
-param ci_service_principal_id string
-param tags                    object
+param key_vault_name             string
+param managed_id_name            string
+param ci_service_principal_id    string
+param admin_service_principal_id string
+param tags                       object
 
 resource user_assigned_identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2025-01-31-preview' = {
   name: managed_id_name
@@ -31,6 +32,14 @@ resource key_vault 'Microsoft.KeyVault/vaults@2025-05-01' = {
       {
         // allow write access to the key vault for the ci service principal
         objectId: ci_service_principal_id
+        tenantId: tenant().tenantId
+        permissions: {
+          secrets: ['get', 'list', 'set', 'delete']
+        }
+      }
+      {
+        // allow write access to the key vault for the admin user
+        objectId: admin_service_principal_id
         tenantId: tenant().tenantId
         permissions: {
           secrets: ['get', 'list', 'set', 'delete']
