@@ -28,7 +28,7 @@ module key_vault './bootstrap/kv.bicep' = {
   params: {
     key_vault_name: edge_vm_key_vault_name
     managed_id_name: edge_vm_managed_id_name
-    ci_service_principal_id: '288b577e-7e6d-49d7-9c67-ea99e13549f1'
+    ci_service_principal_id: 'efc8dd45-b094-4d96-bc95-cc56d49e6b20'
     tags: tags
   }
   dependsOn: [ resource_groups ]
