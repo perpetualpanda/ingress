@@ -29,7 +29,7 @@ module edge_vm './edge-vm/main.bicep' = {
   scope: resourceGroup(edge_resource_group_name)
   params: {
     admin_username: 'ppanda'
-    cloud_init_data: loadTextContent('cloud-init.yml')
+    cloud_init_data: loadTextContent('../templates/cloud-init.yml')
     location: location
     ssh_public_key: ssh_public_key
     subnet_cidr: '10.0.0.0/24'
