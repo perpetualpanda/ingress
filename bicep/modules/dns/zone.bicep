@@ -1,9 +1,6 @@
 @description('name of the primary dns zone')
 param dns_zone_primary_name string
 
-@description('ttl for the dns records')
-param ttl int
-
 @description('project tags')
 param tags object
 
