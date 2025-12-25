@@ -13,9 +13,18 @@ param edge_vm_resource_group_name string
 @description('name of the dns resource group')
 param dns_resource_group_name string
 
+@description('name of the key vault resource')
+param key_vault_name string
+
+@description('name of the key vault tailscale secret key')
+param tailscale_auth_vault_key string
+
 @description('project tags')
 param tags object
 
+var cloud_init_data = loadTextContent('./templates/cloud-init.yml')
+  .replace('<PLACEHOLDER_TS_VAULT_NAME>', key_vault_name)
+  .replace('<PLACEHOLDER_TS_VAULT_KEY>', tailscale_auth_vault_key)
 
 module edge_vm './modules/machine/main.bicep' = {
   name: '${edge_vm_resource_group_name}-deployment'
@@ -24,7 +33,7 @@ module edge_vm './modules/machine/main.bicep' = {
     admin_username: 'ppanda'
     admin_password: edge_vm_admin_password
     managed_id_name: edge_vm_managed_id_name
-    cloud_init_data: loadTextContent('./templates/cloud-init.yml')
+    cloud_init_data: cloud_init_data
     subnet_cidr: '10.0.0.0/24'
     vm_size: 'Standard_B2s'
     vnet_cidr: '10.0.0.0/16'

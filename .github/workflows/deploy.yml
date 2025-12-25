@@ -59,12 +59,14 @@ jobs:
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.INIT_TEMPLATE_FILE }}" \
-            --parameters @${{ env.SHARED_PARAMETERS_FILE }}
+            --parameters @${{ env.SHARED_PARAMETERS_FILE }} \
+            --parameters key_vault_name={{ env.KEY_VAULT_NAME }}
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.DEPLOY_TEMPLATE_FILE }}" \
             --parameters @${{ env.SHARED_PARAMETERS_FILE }} \
-            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}"
+            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}" \
+                key_vault_name="${{ env.KEY_VAULT_NAME }}" tailscale_auth_vault_key="${{ env.KEY_VAULT_TS_OAUTH_SECRET_KEY }}"
 
       - name: Init Edge Deployment
         if: ${{ github.event_name == 'push'|| (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
@@ -72,7 +74,8 @@ jobs:
           az deployment sub create \
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.INIT_TEMPLATE_FILE }}" \
-            --parameters @${{ env.SHARED_PARAMETERS_FILE }}
+            --parameters @${{ env.SHARED_PARAMETERS_FILE }} \
+            --parameters key_vault_name="${{ env.KEY_VAULT_NAME }}"
 
       - name: Set Azure Key Vault Secrets
         if: ${{ github.event_name == 'push'|| (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
@@ -89,4 +92,5 @@ jobs:
             --location "${{env.LOCATION}}" \
             --template-file "${{ env.DEPLOY_TEMPLATE_FILE }}" \
             --parameters @${{ env.SHARED_PARAMETERS_FILE }} \
-            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}"
+            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}" \
+                key_vault_name="${{ env.KEY_VAULT_NAME }}" tailscale_auth_vault_key="${{ env.KEY_VAULT_TS_OAUTH_SECRET_KEY }}"

@@ -50,7 +50,7 @@ sysctl:
 
 runcmd:
   - az login --identity --allow-no-subscriptions
-  - TS_OAUTH_SECRET=$(az keyvault secret show --vault-name kv-edge-pub-westus-1 --name ts-oauth-secret --query value -o tsv)
+  - TS_OAUTH_SECRET=$(az keyvault secret show --vault-name <PLACEHOLDER_TS_VAULT_NAME> --name <PLACEHOLDER_TS_VAULT_KEY> --query value -o tsv)
   - tailscale up --auth-key="${TS_OAUTH_SECRET}?ephemeral=false&preauthorized=true" --ssh --advertise-exit-node --advertise-tags="tag:reverse-proxy"
 
 final_message: "system is up, after $UPTIME seconds"
