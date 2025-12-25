@@ -81,8 +81,8 @@ jobs:
         if: ${{ github.event_name == 'push'|| (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
         run: |
           az keyvault secret set \
-            --vault-name "${{ KEY_VAULT_NAME }}" \
-            --name "${{ KEY_VAULT_TS_OAUTH_SECRET_KEY }}" \
+            --vault-name "${{ env.KEY_VAULT_NAME }}" \
+            --name "${{ env.KEY_VAULT_TS_OAUTH_SECRET_KEY }}" \
             --value "${{ steps.secrets.outputs.TS_OAUTH_SECRET }}"
 
       - name: Edge Deployment
