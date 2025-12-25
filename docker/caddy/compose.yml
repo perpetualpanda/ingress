@@ -1,6 +1,7 @@
 services:
   caddy:
     image: caddy:latest
+    runtime: runsc
     ports:
       - "80:80"
       - "443:443"
@@ -8,15 +9,15 @@ services:
       - "5984:5984/tcp"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
+      - caddy-data:/data
+      - caddy-config:/config
     networks:
       - proxy-network
     restart: unless-stopped
 
 volumes:
-  caddy_data:
-  caddy_config:
+  caddy-data:
+  caddy-config:
 
 networks:
   proxy-network:

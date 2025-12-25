@@ -7,12 +7,6 @@ nas.ppanda.org:443 {
     }
 }
 
-sync.ppanda.org:5984 {
-    reverse_proxy http://nexus-boron.scorpion-galaxy.ts.net:5984 {
-        header_up Host {upstream_hostport}
-    }
-}
-
 status.ppanda.org:443 {
     reverse_proxy uptime-kuma:3001
 }
