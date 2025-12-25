@@ -1,8 +1,11 @@
 @description('name of the dns zone resource')
-param dns_zone_name string
+param dns_zone_primary_name string
 
 @description('public ip of the edge vm')
 param edge_vm_public_ip string
+
+@description('project tags')
+param tags object
 
 module dns_zone_primary './zone.bicep' = {
   name: 'dns-zone-deployment'

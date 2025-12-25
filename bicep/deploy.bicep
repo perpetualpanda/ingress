@@ -45,7 +45,7 @@ module dns './modules/dns/main.bicep' = {
   name: '${dns_resource_group_name}-deployment'
   scope: resourceGroup(dns_resource_group_name)
   params: {
-    edge_vm_public_ip: edge_vm.edge_vm_public_ip
+    edge_vm_public_ip: edge_vm.outputs.edge_vm_public_ip
     dns_zone_primary_name: 'ppanda.org'
     tags: tags
   }
