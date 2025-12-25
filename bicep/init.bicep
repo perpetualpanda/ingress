@@ -16,7 +16,7 @@ param key_vault_name string
 param tags object
 
 @description('object id of the ci runner service principal')
-param ci_service_principal_object_id string = '288b577e-7e6d-49d7-9c67-ea99e13549f1'
+param ci_service_principal_object_id string = 'efc8dd45-b094-4d96-bc95-cc56d49e6b20'
 
 module resource_groups './modules/misc/rg.bicep' = {
   name: 'resource-groups-deployment'
