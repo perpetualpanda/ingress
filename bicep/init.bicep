@@ -18,7 +18,7 @@ param tags object
 @description('object id of the ci runner service principal')
 param ci_service_principal_object_id string = '288b577e-7e6d-49d7-9c67-ea99e13549f1'
 
-module resource_groups './misc/rg.bicep' = {
+module resource_groups './modules/misc/rg.bicep' = {
   name: 'resource-groups-deployment'
   scope: subscription()
   params: {
@@ -31,7 +31,7 @@ module resource_groups './misc/rg.bicep' = {
   }
 }
 
-module key_vault './misc/kv.bicep' = {
+module key_vault './modules/misc/kv.bicep' = {
   name: '${edge_vm_resource_group_name}-key-vault-deployment'
   scope: resourceGroup(edge_vm_resource_group_name)
   params: {
