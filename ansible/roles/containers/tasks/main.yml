@@ -1,0 +1,40 @@
+---
+- name: Ensure daemon settings are configured
+  ansible.builtin.copy:
+    src: ./files/daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: "0644"
+  notify: "Restart Docker service"
+
+- name: Ensure /opt/docker exists
+  ansible.builtin.file:
+    path: /opt/docker
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: Copy service files to /opt/docker
+  ansible.builtin.copy:
+    src: "./files/docker"
+    dest: "/opt/docker/"
+    mode: "0644"
+    owner: root
+    group: root
+    remote_src: no
+  become: true
+
+- name: Create docker network
+  ansible.builtin.command: docker network create proxy-network
+  failed_when: false
+  become: true
+
+- name: Run docker-compose for all services
+  ansible.builtin.command: docker compose up -d
+  args:
+    chdir: "/opt/docker/{{ item }}"
+  loop:
+    - caddy
+    - uptime-kuma
+  become: true
