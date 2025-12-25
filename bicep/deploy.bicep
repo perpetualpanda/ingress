@@ -22,9 +22,9 @@ param tailscale_auth_vault_key string
 @description('project tags')
 param tags object
 
-var cloud_init_data = loadTextContent('./templates/cloud-init.yml')
-cloud_init_data = replace(cloud_init_data, '<PLACEHOLDER_TS_VAULT_NAME>', key_vault_name)
-cloud_init_data = replace(cloud_init_data,'<PLACEHOLDER_TS_VAULT_KEY>', tailscale_auth_vault_key)
+var raw = loadTextContent('./templates/cloud-init.yml')
+var raw2 = replace(raw, '<PLACEHOLDER_TS_VAULT_NAME>', key_vault_name)
+var cloud_init_data = replace(raw2,'<PLACEHOLDER_TS_VAULT_KEY>', tailscale_auth_vault_key)
 
 module edge_vm './modules/machine/main.bicep' = {
   name: '${edge_vm_resource_group_name}-deployment'
