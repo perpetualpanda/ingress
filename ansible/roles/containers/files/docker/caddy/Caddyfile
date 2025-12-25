@@ -1,3 +1,7 @@
+mc.ppanda.org:25565 {
+    reverse_proxy nexus.scorpion-galaxy.ts.net:25565
+}
+
 nas.ppanda.org:443 {
     reverse_proxy https://denabase.scorpion-galaxy.ts.net:5001 {
         header_up Host {upstream_hostport}
