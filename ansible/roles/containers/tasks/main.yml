@@ -18,7 +18,7 @@
 - name: Copy service files to /opt/docker
   ansible.builtin.copy:
     src: "./files/docker"
-    dest: "/opt/docker/"
+    dest: "/opt/"
     mode: "0644"
     owner: root
     group: root
@@ -36,5 +36,6 @@
     chdir: "/opt/docker/{{ item }}"
   loop:
     - caddy
+    - gate
     - uptime-kuma
   become: true
