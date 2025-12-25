@@ -36,6 +36,19 @@ resource nsg_resource 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
           direction: 'inbound'
         }
       }
+      {
+        name: 'allow-minecraft'
+        properties: {
+          protocol: 'tcp'
+          sourcePortRange: '*'
+          destinationPortRange: '25565'
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: '*'
+          access: 'allow'
+          priority: 340
+          direction: 'Inbound'
+        }
+      }
     ]
   }
 }
