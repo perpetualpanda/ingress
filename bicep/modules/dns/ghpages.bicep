@@ -1,4 +1,7 @@
+@description('name of the dns zone resource')
 param dns_zone_name string
+
+@description('ttl for the dns records')
 param ttl int
 
 var purpose = 'github-pages'

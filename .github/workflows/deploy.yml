@@ -1,4 +1,4 @@
-name: Ingress Deployment
+name: Deploy Edge Resources
 
 on:
   push:
@@ -16,9 +16,11 @@ on:
 
 env:
   LOCATION: westus
-  BOOTSTRAP_TEMPLATE_FILE: ./bicep/bootstrap/main.bicep
-  SERVICES_TEMPLATE_FILE: ./bicep/services/main.bicep
-  PARAMETERS_FILE: ./bicep/templates/parameters.json
+  KEY_VAULT_NAME: kv-edge-pub-westus-1
+  KEY_VAULT_TS_OAUTH_SECRET_KEY: ts-oauth-secret
+  INIT_TEMPLATE_FILE: ./bicep/init.bicep
+  DEPLOY_TEMPLATE_FILE: ./bicep/deploy.bicep
+  SHARED_PARAMETERS_FILE: ./bicep/templates/params.shared.json
 
 jobs:
   deploy:
@@ -56,35 +58,39 @@ jobs:
         run: |
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.BOOTSTRAP_TEMPLATE_FILE }}" \
-            --parameters @${{ env.PARAMETERS_FILE }}
+            --template-file "${{ env.INIT_TEMPLATE_FILE }}" \
+            --parameters "@${{ env.SHARED_PARAMETERS_FILE }}" \
+            --parameters key_vault_name="${{ env.KEY_VAULT_NAME }}"
           az deployment sub what-if \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.SERVICES_TEMPLATE_FILE }}" \
-            --parameters @${{ env.PARAMETERS_FILE }} \
-            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}"
+            --template-file "${{ env.DEPLOY_TEMPLATE_FILE }}" \
+            --parameters "@${{ env.SHARED_PARAMETERS_FILE }}" \
+            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}" \
+                key_vault_name="${{ env.KEY_VAULT_NAME }}" tailscale_auth_vault_key="${{ env.KEY_VAULT_TS_OAUTH_SECRET_KEY }}"
 
-      - name: Bootstrap Deployment
+      - name: Init Edge Deployment
         if: ${{ github.event_name == 'push'|| (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.BOOTSTRAP_TEMPLATE_FILE }}" \
-            --parameters @${{ env.PARAMETERS_FILE }}
+            --template-file "${{ env.INIT_TEMPLATE_FILE }}" \
+            --parameters "@${{ env.SHARED_PARAMETERS_FILE }}" \
+            --parameters key_vault_name="${{ env.KEY_VAULT_NAME }}"
 
       - name: Set Azure Key Vault Secrets
         if: ${{ github.event_name == 'push'|| (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
         run: |
           az keyvault secret set \
-            --vault-name "kv-edge-pub-${{ env.LOCATION }}-1" \
-            --name "ts-oauth-secret" \
+            --vault-name "${{ env.KEY_VAULT_NAME }}" \
+            --name "${{ env.KEY_VAULT_TS_OAUTH_SECRET_KEY }}" \
             --value "${{ steps.secrets.outputs.TS_OAUTH_SECRET }}"
 
-      - name: Deployment
+      - name: Edge Deployment
         if: ${{ github.event_name == 'push'|| (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
         run: |
           az deployment sub create \
             --location "${{env.LOCATION}}" \
-            --template-file "${{ env.SERVICES_TEMPLATE_FILE }}" \
-            --parameters @${{ env.PARAMETERS_FILE }} \
-            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}"
+            --template-file "${{ env.DEPLOY_TEMPLATE_FILE }}" \
+            --parameters "@${{ env.SHARED_PARAMETERS_FILE }}" \
+            --parameters edge_vm_admin_password="${{ steps.secrets.outputs.TEMP_VM_ADMIN_PASSWORD }}" \
+                key_vault_name="${{ env.KEY_VAULT_NAME }}" tailscale_auth_vault_key="${{ env.KEY_VAULT_TS_OAUTH_SECRET_KEY }}"

@@ -5,7 +5,7 @@ disable_root: true
 package_update: true
 package_upgrade: true
 ssh_pwauth: false
-ssh_import_id: [ 'gh:yuzhoumo' ]
+ssh_import_id: [ 'gh:yuzhoumo', 'gh:perpetual-panda' ]
 timezone: America/Los_Angeles
 
 apt:
@@ -48,23 +48,9 @@ sysctl:
   net.ipv4.ip_forward: 1
   net.ipv6.conf.all.forwarding: 1
 
-write_files:
-  # configure gvisor docker runtime
-  - path: /etc/docker/daemon.json
-    owner: root:root
-    permissions: '0644'
-    content: |
-      {
-        "runtimes": {
-          "runsc": {
-            "path": "/usr/bin/runsc"
-          }
-        }
-      }
-
 runcmd:
   - az login --identity --allow-no-subscriptions
-  - TS_OAUTH_SECRET=$(az keyvault secret show --vault-name kv-edge-pub-westus-1 --name ts-oauth-secret --query value -o tsv)
+  - TS_OAUTH_SECRET=$(az keyvault secret show --vault-name <PLACEHOLDER_TS_VAULT_NAME> --name <PLACEHOLDER_TS_VAULT_KEY> --query value -o tsv)
   - tailscale up --auth-key="${TS_OAUTH_SECRET}?ephemeral=false&preauthorized=true" --ssh --advertise-exit-node --advertise-tags="tag:reverse-proxy"
 
 final_message: "system is up, after $UPTIME seconds"

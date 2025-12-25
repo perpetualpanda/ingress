@@ -1,5 +1,8 @@
-param name     string
-param tags     object
+@description('name of the network security group')
+param name string
+
+@description('project tags')
+param tags object
 
 resource nsg_resource 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
   name: name
