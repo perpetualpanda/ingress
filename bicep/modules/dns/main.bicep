@@ -1,5 +1,8 @@
-param dns_zone_primary_name string
-param tags                  object
+@description('name of the dns zone resource')
+param dns_zone_name string
+
+@description('public ip of the edge vm')
+param edge_vm_public_ip string
 
 module dns_zone_primary './zone.bicep' = {
   name: 'dns-zone-deployment'
@@ -40,6 +43,7 @@ module dns_services './services.bicep' = {
   name: 'dns-services-deployment'
   params: {
     dns_zone_name: dns_zone_primary_name
+    edge_vm_public_ip: edge_vm_public_ip
     ttl: 300
   }
   dependsOn: [ dns_zone_primary ]

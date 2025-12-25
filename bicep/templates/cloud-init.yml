@@ -5,7 +5,7 @@ disable_root: true
 package_update: true
 package_upgrade: true
 ssh_pwauth: false
-ssh_import_id: [ 'gh:yuzhoumo' ]
+ssh_import_id: [ 'gh:yuzhoumo', 'gh:perpetual-panda' ]
 timezone: America/Los_Angeles
 
 apt:

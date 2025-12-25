@@ -1,5 +1,11 @@
+@description('name of the primary dns zone')
 param dns_zone_primary_name string
-param tags                  object
+
+@description('ttl for the dns records')
+param ttl int
+
+@description('project tags')
+param tags object
 
 resource dns_zone 'Microsoft.Network/dnszones@2023-07-01-preview' = {
   name: dns_zone_primary_name

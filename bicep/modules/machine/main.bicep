@@ -1,14 +1,30 @@
-@secure()
-param admin_password  string
-param admin_username  string
-param managed_id_name string
-param cloud_init_data string
-param subnet_cidr     string
-param vnet_cidr       string
-param vm_size         string
-param tags            object
+@description('suffix for the vm resource names')
+param name_suffix string = 'edge-pub-${resourceGroup().location}'
 
-var name_suffix = 'edge-pub-${resourceGroup().location}'
+@description('admin username for the vm')
+param admin_username string
+
+@secure()
+@description('admin password for the vm')
+param admin_password string
+
+@description('name of the user assigned managed id for the vm')
+param managed_id_name string
+
+@description('cloud-init config string')
+param cloud_init_data string
+
+@description('cidr of the subnet mask')
+param subnet_cidr string
+
+@description('cidr of the vnet address space')
+param vnet_cidr string
+
+@description('azure vm size')
+param vm_size string
+
+@description('project tags')
+param tags object
 
 module nsg './nsg.bicep' = {
   name: 'nsg-deployment'
