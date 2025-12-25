@@ -19,11 +19,15 @@ apt:
     azure-cli.list:
       source: "deb [arch={{ 'amd64' if v1.machine == 'x86_64' else 'arm64' }} signed-by=/etc/apt/trusted.gpg.d/azure-cli.gpg] https://packages.microsoft.com/repos/azure-cli {{ v1.distro_release }} main"
       keyid: BC528686B50D79E339D3721CEB3E94ADBE1229CF
+    gvisor.list:
+      source: "deb [arch={{ 'amd64' if v1.machine == 'x86_64' else 'arm64' }} signed-by=/etc/apt/trusted.gpg.d/gvisor.gpg] https://storage.googleapis.com/gvisor/releases release main"
+      keyid: 6F1DF85E3A71C24918E727D56FC6D554E32BD943
 
 packages:
   - azure-cli
   - docker-ce
   - docker-ce-cli
+  - runsc
   - tailscale
 
 groups:
@@ -43,6 +47,20 @@ sysctl:
   # configure ip forwarding for tailscale
   net.ipv4.ip_forward: 1
   net.ipv6.conf.all.forwarding: 1
+
+write_files:
+  # configure gvisor docker runtime
+  - path: /etc/docker/daemon.json
+    owner: root:root
+    permissions: '0644'
+    content: |
+      {
+        "runtimes": {
+          "runsc": {
+            "path": "/usr/bin/runsc"
+          }
+        }
+      }
 
 runcmd:
   - az login --identity --allow-no-subscriptions
