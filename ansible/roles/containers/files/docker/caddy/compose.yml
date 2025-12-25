@@ -1,7 +1,6 @@
 services:
   caddy:
     image: caddy:latest
-    runtime: runsc
     ports:
       - "80:80"
       - "443:443"
