@@ -8,8 +8,6 @@ services:
       PLUGINS_FILE: /extra/plugins.txt
       REPLACE_ENV_VARIABLES: "TRUE" # enable env var replacement
       ENV_VARIABLE_PREFIX: "MCPROXY_" # prefix for variables to replace
-    env_file:
-      - .env
     ports:
       - "25565:25565"
     volumes:
