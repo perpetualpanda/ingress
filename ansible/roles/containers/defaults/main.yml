@@ -1,3 +1,3 @@
 ---
 docker_directory: /opt/docker
-mcproxy_velocity_forwarding_secret: ""
+mcproxy_velocity_forwarding_secret: "{{ lookup('bitwarden.secrets.lookup', '4c6b2fc4-f7ad-4ad8-998e-b3c00038403a') }}"
