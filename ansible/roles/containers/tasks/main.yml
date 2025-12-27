@@ -42,6 +42,7 @@
     chdir: "{{ docker_directory }}/mc-proxy"
   environment:
     MCPROXY_VELOCITY_FORWARDING_SECRET: "{{ mcproxy_velocity_forwarding_secret }}"
+  become_flags: '-E' # preserve env vars
   become: true
 
 - name: Launch uptime-kuma
