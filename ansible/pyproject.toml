@@ -1,0 +1,9 @@
+[project]
+name = "ingress"
+version = "0.1.0"
+description = "Ansible playbook for provisioning homelab ingress services"
+requires-python = ">=3.12"
+dependencies = [
+    "ansible>=13.1.0",
+    "bitwarden-sdk>=1.0.0",
+]

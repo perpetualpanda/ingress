@@ -1,0 +1,23 @@
+services:
+  mc-proxy:
+    image: itzg/mc-proxy:latest
+    environment:
+      TYPE: VELOCITY
+      DEBUG: "false"
+      ENABLE_RCON: "true"
+      PLUGINS_FILE: /extra/plugins.txt
+      REPLACE_ENV_VARIABLES: "true" # enable env var replacement
+      ENV_VARIABLE_PREFIX: "MCPROXY_" # prefix for variables to replace
+      MCPROXY_VELOCITY_FORWARDING_SECRET: "${MCPROXY_VELOCITY_FORWARDING_SECRET}"
+    ports:
+      - "25565:25565/tcp"
+    volumes:
+      - ./config/bstats-config.txt:/server/plugins/bStats/config.txt:ro
+      - ./config/forwarding.secret:/config/forwarding.secret:ro
+      - ./config/plugins.txt:/extra/plugins.txt:ro
+      - ./config/server-icon.png:/server/server-icon.png:ro
+      - ./config/velocity.toml:/server/velocity.toml:ro
+      - mc-proxy-server:/server
+
+volumes:
+  mc-proxy-server:

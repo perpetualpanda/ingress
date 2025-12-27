@@ -1,5 +1,5 @@
 ---
-- name: Ensure daemon settings are configured
+- name: Ensure docker daemon settings are configured
   ansible.builtin.copy:
     src: ./files/daemon.json
     dest: /etc/docker/daemon.json
@@ -8,17 +8,17 @@
     mode: "0644"
   notify: "Restart Docker service"
 
-- name: Ensure /opt/docker exists
+- name: Ensure {{ docker_directory }} exists
   ansible.builtin.file:
-    path: /opt/docker
+    path: "{{ docker_directory }}"
     state: directory
     mode: '0755'
   become: true
 
-- name: Copy service files to /opt/docker
+- name: Copy service files to {{ docker_directory }}
   ansible.builtin.copy:
-    src: "./files/docker"
-    dest: "/opt/"
+    src: "./files/docker/."
+    dest: "{{ docker_directory }}"
     mode: "0644"
     owner: root
     group: root
@@ -30,12 +30,23 @@
   failed_when: false
   become: true
 
-- name: Run docker-compose for all services
+- name: Launch caddy
   ansible.builtin.command: docker compose up -d
   args:
-    chdir: "/opt/docker/{{ item }}"
-  loop:
-    - caddy
-    - gate
-    - uptime-kuma
+    chdir: "{{ docker_directory }}/caddy"
+  become: true
+
+- name: Launch mc-proxy service
+  ansible.builtin.command: docker compose up -d
+  args:
+    chdir: "{{ docker_directory }}/mc-proxy"
+  environment:
+    MCPROXY_VELOCITY_FORWARDING_SECRET: "{{ mcproxy_velocity_forwarding_secret }}"
+  become_flags: '-E' # preserve env vars
+  become: true
+
+- name: Launch uptime-kuma
+  ansible.builtin.command: docker compose up -d
+  args:
+    chdir: "{{ docker_directory }}/uptime-kuma"
   become: true
