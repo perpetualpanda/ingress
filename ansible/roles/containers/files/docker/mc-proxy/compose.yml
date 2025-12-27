@@ -1,0 +1,19 @@
+services:
+  mc-proxy:
+    image: itzg/mc-proxy:latest
+    environment:
+      TYPE: VELOCITY
+      DEBUG: "false"
+      ENABLE_RCON: "true"
+      PLUGINS_FILE: /extra/plugins.txt
+    ports:
+      - "25565:25565"
+    volumes:
+      - ./config/plugins.txt:/extra/plugins.txt
+      - ./config/bstats-config.txt:/server/plugins/bStats/config.txt:ro
+      - ./config/velocity.toml:/config/velocity.toml:ro
+      - ./config/forwarding.secret:/config/forwarding.secret:ro
+      - mc-proxy-server:/server
+
+volumes:
+  mc-proxy-server:
