@@ -6,12 +6,16 @@ services:
       DEBUG: "false"
       ENABLE_RCON: "true"
       PLUGINS_FILE: /extra/plugins.txt
+      REPLACE_ENV_VARIABLES: "TRUE" # enable env var replacement
+      ENV_VARIABLE_PREFIX: "MCPROXY_" # prefix for variables to replace
+    env_file:
+      - .env
     ports:
       - "25565:25565"
     volumes:
       - ./config/bstats-config.txt:/server/plugins/bStats/config.txt:ro
       - ./config/forwarding.secret:/config/forwarding.secret:ro
-      - ./config/plugins.txt:/extra/plugins.txt
+      - ./config/plugins.txt:/extra/plugins.txt:ro
       - ./config/server-icon.png:/server/server-icon.png:ro
       - ./config/velocity.toml:/config/velocity.toml:ro
       - mc-proxy-server:/server

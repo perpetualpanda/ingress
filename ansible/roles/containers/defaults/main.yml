@@ -1,0 +1,3 @@
+---
+docker_directory: /opt/docker
+mcproxy_velocity_forwarding_secret: ""
