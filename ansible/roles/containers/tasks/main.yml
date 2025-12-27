@@ -36,6 +36,6 @@
     chdir: "/opt/docker/{{ item }}"
   loop:
     - caddy
-    - gate
+    - mc-proxy
     - uptime-kuma
   become: true
