@@ -5,4 +5,4 @@ install:
 
 .PHONY: deploy
 deploy:
-	uv run ansible-playbook main.yml -i inventory
+	uv run --env-file .env ansible-playbook main.yml -i inventory
