@@ -4,9 +4,6 @@ targetScope = 'subscription'
 @description('initial admin password for the vm')
 param edge_vm_admin_password string
 
-@description('name of the user assigned managed id for the vm')
-param edge_vm_managed_id_name string
-
 @description('suffix to use for resource names')
 param resource_name_suffix string
 

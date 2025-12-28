@@ -1,8 +1,5 @@
 targetScope = 'subscription'
 
-@description('name of the vm managed id')
-param edge_vm_managed_id_name string
-
 @description('suffix to use for resource names')
 param resource_name_suffix string
 
@@ -33,7 +30,7 @@ module key_vault './modules/misc/kv.bicep' = {
   scope: resourceGroup('rg-vm-${resource_name_suffix}')
   params: {
     key_vault_name: key_vault_name
-    managed_id_name: edge_vm_managed_id_name
+    managed_id_name: 'mi-${resource_name_suffix}'
     ci_service_principal_object_id: ci_service_principal_object_id
     tags: tags
   }
