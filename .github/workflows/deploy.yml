@@ -3,7 +3,7 @@ name: Deploy Edge Resources
 on:
   push:
     branches: [ "main" ]
-    paths: [ "bicep/**" ]
+    paths: [ "**/*.bicep" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
