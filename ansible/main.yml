@@ -1,7 +1,0 @@
----
-- name: Set up edge vm containers
-  hosts: vm-edge-pub-westus.scorpion-galaxy.ts.net
-  become: true
-  gather_facts: no
-  roles:
-    - containers
