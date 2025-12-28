@@ -1,5 +1,5 @@
 @description('suffix for the vm resource names')
-param name_suffix string = 'edge-pub-${resourceGroup().location}'
+param name_suffix string
 
 @description('admin username for the vm')
 param admin_username string

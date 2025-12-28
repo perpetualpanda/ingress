@@ -3,11 +3,8 @@ targetScope = 'subscription'
 @description('name of the vm managed id')
 param edge_vm_managed_id_name string
 
-@description('name of the vm resource group')
-param edge_vm_resource_group_name string
-
-@description('name of the dns resource group')
-param dns_resource_group_name string
+@description('suffix to use for resource names')
+param resource_name_suffix string
 
 @description('name of the key vault resource')
 param key_vault_name string
@@ -24,8 +21,8 @@ module resource_groups './modules/misc/rg.bicep' = {
   params: {
     location: deployment().location
     rg_names:[
-      dns_resource_group_name
-      edge_vm_resource_group_name
+      'rg-dns-${resource_name_suffix}'
+      'rg-vm-${resource_name_suffix}'
     ]
     tags: tags
   }

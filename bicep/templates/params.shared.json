@@ -1,17 +1,11 @@
 {
-  "edge_vm_managed_id_name": {
-    "value": "mi-edge-pub-westus"
-  },
-  "edge_vm_resource_group_name": {
-    "value": "rg-edge-pub-westus"
-  },
-  "dns_resource_group_name": {
-    "value": "rg-dns-pub-westus"
+  "resource_name_suffix": {
+    "value": "edge-prod-westus"
   },
   "tags": {
     "value": {
       "deployment_type": "automated",
-      "environment": "public",
+      "environment": "production",
       "project": "homelab",
       "purpose": "public-ingress"
     }
