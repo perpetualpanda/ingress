@@ -18,9 +18,9 @@ env:
   LOCATION: westus
   KEY_VAULT_NAME: kv-edge-pub-westus-1
   KEY_VAULT_TS_OAUTH_SECRET_KEY: ts-oauth-secret
-  INIT_TEMPLATE_FILE: ./bicep/init.bicep
-  DEPLOY_TEMPLATE_FILE: ./bicep/deploy.bicep
-  SHARED_PARAMETERS_FILE: ./bicep/templates/params.shared.json
+  INIT_TEMPLATE_FILE: ./init.bicep
+  DEPLOY_TEMPLATE_FILE: ./deploy.bicep
+  SHARED_PARAMETERS_FILE: ./templates/params.shared.json
 
 jobs:
   deploy:
