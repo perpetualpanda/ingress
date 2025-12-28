@@ -29,7 +29,7 @@ module resource_groups './modules/misc/rg.bicep' = {
 }
 
 module key_vault './modules/misc/kv.bicep' = {
-  name: '${edge_vm_resource_group_name}-key-vault-deployment'
+  name: 'rg-vm-${resource_name_suffix}-kv-deployment'
   scope: resourceGroup(edge_vm_resource_group_name)
   params: {
     key_vault_name: key_vault_name
