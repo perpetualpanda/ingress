@@ -29,6 +29,24 @@ resource dns_zone_a_mc 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
   }
 }
 
+resource dns_zone_a_mc_test 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
+  parent: dns_zone
+  name: 'mc-test'
+  properties: {
+    metadata: {
+      purpose: 'minecraft-server-test'
+    }
+    TTL: ttl
+    ARecords: [
+      {
+        ipv4Address: edge_vm_public_ip
+      }
+    ]
+    targetResource: {}
+    trafficManagementProfile: {}
+  }
+}
+
 resource dns_zone_a_nas 'Microsoft.Network/dnszones/A@2023-07-01-preview' = {
   parent: dns_zone
   name: 'nas'
